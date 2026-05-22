@@ -43,9 +43,23 @@ android {
 }
 
 dependencies {
+    // Implementación del BoM para la plataforma Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
     implementation(platform(libs.androidx.compose.bom))
+
+    // Dependencia para la librería de autenticación
+    implementation(libs.firebase.auth)
+
+    // Dependencias para la gestión de credenciales y sus versiones específicas
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
+
+    // Componente oficial para la autenticación con Google
+    implementation(libs.googleid.v111)
+
+    // Dependencias extra de Android Studio
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
