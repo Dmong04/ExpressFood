@@ -19,7 +19,7 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         observeAuthState()
     }
 
-    /** Escucha cambios en el estado de Firebase Auth y actualiza el StateFlow. */
+    /** Escucha cambios en Firebase Auth y actualiza el StateFlow. */
     private fun observeAuthState() {
         viewModelScope.launch {
             authRepository.authState.collect { firebaseUser ->
@@ -34,22 +34,6 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
                     AuthState.Unauthenticated
                 }
             }
-        }
-    }
-
-    /**
-     * Recibe el ID token de Google (obtenido via Credential Manager en la capa UI)
-     * y completa el inicio de sesión con Firebase Auth.
-     */
-    fun handleGoogleIdToken(idToken: String) {
-        viewModelScope.launch {
-            _authState.value = AuthState.Loading
-            authRepository.signInWithGoogle(idToken).onFailure { e ->
-                _authState.value = AuthState.Error(
-                    e.message ?: "No se pudo iniciar sesión con Google"
-                )
-            }
-            // En caso de éxito, observeAuthState() actualiza el estado automáticamente.
         }
     }
 

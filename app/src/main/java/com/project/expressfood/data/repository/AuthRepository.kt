@@ -1,7 +1,6 @@
 package com.project.expressfood.data.repository
 
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
 import com.project.expressfood.data.remote.auth.AuthService
 import com.project.expressfood.data.remote.firestore.UserFirestoreService
 import com.project.expressfood.domain.model.User
@@ -25,15 +24,6 @@ class AuthRepository(
                 role        = UserRole.CLIENT,
                 createdAt   = System.currentTimeMillis(),
             ).also { userFirestoreService.createUser(it) }
-    }
-
-    /**
-     * Autentica al usuario con un ID token de Google obtenido via Credential Manager.
-     * Si tiene éxito el AuthStateListener en AuthService emite el usuario actualizado.
-     */
-    suspend fun signInWithGoogle(idToken: String): Result<Unit> = runCatching {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        authService.signInWithCredential(credential)
     }
 
     fun signOut() = authService.signOut()
