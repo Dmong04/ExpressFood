@@ -5,10 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "orders")
 data class OrderEntity(
-    @PrimaryKey val id: String,
-    val userId: String,
+    @PrimaryKey val orderId: String,
+    val clientId: String,
+    val date: Long,
+    val time: String,
     val status: String,
-    val total: Double,
-    val createdAt: Long,
-    val synced: Boolean = false
+    val totalPrice: Double,
+    val synced: Boolean = false,
 )

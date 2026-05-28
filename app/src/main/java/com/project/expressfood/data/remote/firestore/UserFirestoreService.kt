@@ -14,11 +14,14 @@ class UserFirestoreService(private val firestore: FirebaseFirestore) {
             val doc = usersCollection.document(uid).get().await()
             if (doc.exists()) {
                 User(
-                    uid = uid,
-                    email = doc.getString("email") ?: "",
-                    displayName = doc.getString("displayName") ?: "",
-                    role = UserRole.valueOf(doc.getString("role") ?: UserRole.CLIENT.name),
-                    createdAt = doc.getLong("createdAt") ?: 0L
+                    uid          = uid,
+                    firstName    = doc.getString("firstName") ?: "",
+                    lastName     = doc.getString("lastName") ?: "",
+                    phone        = doc.getString("phone") ?: "",
+                    profilePhoto = doc.getString("profilePhoto") ?: "",
+                    role         = UserRole.valueOf(doc.getString("role") ?: UserRole.CLIENT.name),
+                    address      = doc.getString("address") ?: "",
+                    createdAt    = doc.getLong("createdAt") ?: 0L,
                 )
             } else null
         } catch (e: Exception) {
@@ -29,10 +32,13 @@ class UserFirestoreService(private val firestore: FirebaseFirestore) {
     suspend fun createUser(user: User) {
         usersCollection.document(user.uid).set(
             mapOf(
-                "email" to user.email,
-                "displayName" to user.displayName,
-                "role" to user.role.name,
-                "createdAt" to user.createdAt
+                "firstName"    to user.firstName,
+                "lastName"     to user.lastName,
+                "phone"        to user.phone,
+                "profilePhoto" to user.profilePhoto,
+                "role"         to user.role.name,
+                "address"      to user.address,
+                "createdAt"    to user.createdAt,
             )
         ).await()
     }

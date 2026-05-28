@@ -1,6 +1,6 @@
 /**
  * seed_firestore.js
- * Pobla Firestore con datos iniciales de productos y un usuario admin.
+ * Pobla Firestore con datos iniciales de ítems del menú y un usuario admin.
  *
  * USO:
  *   1. Instalar dependencias:  npm install firebase-admin
@@ -21,96 +21,80 @@ const db = admin.firestore();
 
 // ─── Datos iniciales ─────────────────────────────────────────────────────────
 
-const products = [
+const items = [
   {
-    id: 'product_001',
-    name: 'Hamburguesa Clásica',
+    id: 'item_001',
+    title: 'Hamburguesa Clásica',
     description: 'Carne 100% de res, lechuga fresca, tomate, queso cheddar y salsa especial.',
     price: 4500,
-    imageUrl: '',
-    ingredients: ['Carne de res', 'Pan brioche', 'Lechuga', 'Tomate', 'Queso cheddar', 'Salsa especial'],
-    estimatedTimeMinutes: 15,
-    rating: 4.5,
-    available: true,
-    category: 'hamburguesas',
+    prepTime: 15,
+    imgUrl: '',
+    active: true,
   },
   {
-    id: 'product_002',
-    name: 'Hamburguesa BBQ',
+    id: 'item_002',
+    title: 'Hamburguesa BBQ',
     description: 'Doble carne, tocino crocante, cebolla caramelizada y salsa BBQ ahumada.',
     price: 5800,
-    imageUrl: '',
-    ingredients: ['Doble carne de res', 'Tocino', 'Cebolla caramelizada', 'Salsa BBQ', 'Pan brioche'],
-    estimatedTimeMinutes: 18,
-    rating: 4.8,
-    available: true,
-    category: 'hamburguesas',
+    prepTime: 18,
+    imgUrl: '',
+    active: true,
   },
   {
-    id: 'product_003',
-    name: 'Papas Fritas',
+    id: 'item_003',
+    title: 'Papas Fritas',
     description: 'Papas crujientes con sal y condimentos. Porción grande.',
     price: 2000,
-    imageUrl: '',
-    ingredients: ['Papa', 'Aceite', 'Sal', 'Condimentos'],
-    estimatedTimeMinutes: 8,
-    rating: 4.3,
-    available: true,
-    category: 'acompañamientos',
+    prepTime: 8,
+    imgUrl: '',
+    active: true,
   },
   {
-    id: 'product_004',
-    name: 'Refresco',
+    id: 'item_004',
+    title: 'Refresco',
     description: 'Refresco en lata 355ml. Elige entre: Cola, Naranja, Limón.',
     price: 1200,
-    imageUrl: '',
-    ingredients: ['Agua carbonatada', 'Azúcar', 'Saborizantes naturales'],
-    estimatedTimeMinutes: 1,
-    rating: 4.0,
-    available: true,
-    category: 'bebidas',
+    prepTime: 1,
+    imgUrl: '',
+    active: true,
   },
   {
-    id: 'product_005',
-    name: 'Combo Clásico',
+    id: 'item_005',
+    title: 'Combo Clásico',
     description: 'Hamburguesa Clásica + Papas Fritas + Refresco.',
     price: 6500,
-    imageUrl: '',
-    ingredients: ['Ver Hamburguesa Clásica', 'Ver Papas Fritas', 'Ver Refresco'],
-    estimatedTimeMinutes: 18,
-    rating: 4.6,
-    available: true,
-    category: 'combos',
+    prepTime: 18,
+    imgUrl: '',
+    active: true,
   },
 ];
 
 // ─── Funciones de seed ────────────────────────────────────────────────────────
 
-async function seedProducts() {
-  console.log('📦 Insertando productos...');
+async function seedItems() {
+  console.log('📦 Insertando ítems del menú...');
   const batch = db.batch();
 
-  products.forEach((product) => {
-    const { id, ...data } = product;
-    const ref = db.collection('products').doc(id);
-    batch.set(ref, {
-      ...data,
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-    });
+  items.forEach((item) => {
+    const { id, ...data } = item;
+    const ref = db.collection('items').doc(id);
+    batch.set(ref, { ...data, synced: true });
   });
 
   await batch.commit();
-  console.log(`✅ ${products.length} productos insertados.`);
+  console.log(`✅ ${items.length} ítems insertados.`);
 }
 
-async function createAdminUser(uid, email, displayName) {
-  console.log(`👤 Creando usuario admin: ${email}`);
+async function createAdminUser(uid, firstName, lastName) {
+  console.log(`👤 Creando usuario admin: ${firstName} ${lastName}`);
   await db.collection('users').doc(uid).set({
-    email,
-    displayName,
-    role: 'ADMIN',
-    createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    firstName,
+    lastName,
+    phone:        '',
+    profilePhoto: '',
+    role:         'ADMIN',
+    address:      '',
+    createdAt:    admin.firestore.FieldValue.serverTimestamp(),
   });
   console.log('✅ Usuario admin creado.');
 }
@@ -119,11 +103,11 @@ async function createAdminUser(uid, email, displayName) {
 
 async function main() {
   try {
-    await seedProducts();
+    await seedItems();
 
     // Opcional: crear un admin inicial.
     // Reemplazá el UID con el UID real del usuario en Firebase Auth.
-    // await createAdminUser('UID_DEL_ADMIN_AQUI', 'admin@expressfood.com', 'Administrador');
+    // await createAdminUser('UID_DEL_ADMIN_AQUI', 'Admin', 'ExpressFood');
 
     console.log('\n🎉 Seed completado exitosamente.');
     process.exit(0);
