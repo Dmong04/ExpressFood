@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface CartDao {
 
-    @Query("SELECT * FROM cart_items")
-    fun getAll(): Flow<List<CartItemEntity>>
+    @Query("SELECT * FROM cart_items WHERE clientId = :clientId")
+    fun getByClient(clientId: String): Flow<List<CartItemEntity>>
 
     @Upsert
     suspend fun upsert(item: CartItemEntity)
@@ -16,6 +16,6 @@ interface CartDao {
     @Delete
     suspend fun delete(item: CartItemEntity)
 
-    @Query("DELETE FROM cart_items")
-    suspend fun clearAll()
+    @Query("DELETE FROM cart_items WHERE clientId = :clientId")
+    suspend fun clearByClient(clientId: String)
 }

@@ -17,13 +17,19 @@ class AuthRepository(
     /** Obtiene el perfil del usuario desde Firestore o lo crea si es la primera vez. */
     suspend fun getOrCreateUser(firebaseUser: FirebaseUser): User {
         return userFirestoreService.getUser(firebaseUser.uid)
-            ?: User(
-                uid         = firebaseUser.uid,
-                email       = firebaseUser.email ?: "",
-                displayName = firebaseUser.displayName ?: "",
-                role        = UserRole.CLIENT,
-                createdAt   = System.currentTimeMillis(),
-            ).also { userFirestoreService.createUser(it) }
+            ?: run {
+                val nameParts = firebaseUser.displayName.orEmpty().trim().split(" ", limit = 2)
+                User(
+                    uid          = firebaseUser.uid,
+                    firstName    = nameParts.getOrElse(0) { "" },
+                    lastName     = nameParts.getOrElse(1) { "" },
+                    phone        = firebaseUser.phoneNumber ?: "",
+                    profilePhoto = firebaseUser.photoUrl?.toString() ?: "",
+                    role         = UserRole.CLIENT,
+                    address      = "",
+                    createdAt    = System.currentTimeMillis(),
+                ).also { userFirestoreService.createUser(it) }
+            }
     }
 
     fun signOut() = authService.signOut()
