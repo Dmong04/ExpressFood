@@ -1,7 +1,9 @@
 plugins {
+    id("com.google.gms.google-services") version "4.4.4" apply false
+    // id("com.android.application")
+    // id("com.google.gms.google-services")
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
-    id("com.google.gms.google-services")
 }
 
 android {
@@ -41,19 +43,23 @@ android {
 }
 
 dependencies {
-    // Firebase BoM
+    // Implementación del BoM para la plataforma Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.firestore)
+    implementation(platform(libs.androidx.compose.bom))
 
-    // Google Sign-In / Credentials
+    // Dependencia para la librería de autenticación
+    implementation(libs.firebase.auth)
+
+    // Dependencias para la gestión de credenciales y sus versiones específicas
     implementation(libs.androidx.credentials)
     implementation(libs.androidx.credentials.play.services.auth)
     implementation(libs.googleid)
 
-    // Compose BoM
-    implementation(platform(libs.androidx.compose.bom))
+    // Componente oficial para la autenticación con Google
+    implementation(libs.googleid.v111)
+
+    // Dependencias extra de Android Studio
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.ui)
@@ -61,20 +67,6 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-
-    // ViewModel + Navigation Compose
-    implementation(libs.lifecycle.viewmodel.compose)
-    implementation(libs.navigation.compose)
-
-    // Room (runtime + ktx — el compiler se agrega cuando se resuelva la versión de KSP)
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-
-    // Coroutines
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.kotlinx.coroutines.play.services)
-
-    // Tests
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
