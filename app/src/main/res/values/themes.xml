@@ -1,0 +1,61 @@
+<!-- res/values/themes.xml -->
+<resources>
+
+    <!-- Tema base de la app — Material Design 3 -->
+    <style name="Theme.ExpressFood" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+        <item name="colorSurfaceVariant">@color/surface_variant</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant</item>
+
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/on_error</item>
+
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.ExpressFood.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.ExpressFood.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.ExpressFood.Large</item>
+
+    </style>
+
+    <!-- Shapes -->
+    <style name="ShapeAppearance.ExpressFood.Small" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.ExpressFood.Medium" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="ShapeAppearance.ExpressFood.Large" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <!-- Tipografía — sin fuente personalizada por ahora -->
+    <style name="TextAppearance.ExpressFood.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="android:textSize">28sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <!-- Botón Google Sign-In -->
+    <style name="Widget.ExpressFood.Button.Google" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textAppearance">@style/TextAppearance.Material3.LabelLarge</item>
+        <item name="android:textColor">@color/on_surface</item>
+        <item name="strokeColor">@color/outline</item>
+        <item name="strokeWidth">1.5dp</item>
+        <item name="android:backgroundTint">@color/surface</item>
+        <item name="elevation">2dp</item>
+    </style>
+
+</resources>

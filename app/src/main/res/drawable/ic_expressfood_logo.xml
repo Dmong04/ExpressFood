@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="72dp"
+    android:height="72dp"
+    android:viewportWidth="72"
+    android:viewportHeight="72">
+
+    <!-- Fondo círculo verde -->
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M36,36m-36,0a36,36 0,1 1,72 0a36,36 0,1 1,-72 0" />
+
+    <!-- Cuerpo de la bolsa -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M24,30 Q23,28 25,27 L47,27 Q49,28 48,30 L45,50 Q44.5,52 42,52 L30,52 Q27.5,52 27,50 Z" />
+
+    <!-- Asa izquierda -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#2E7D32"
+        android:strokeWidth="2.5"
+        android:fillAlpha="0"
+        android:pathData="M30,27 Q30,21 36,21 Q42,21 42,27" />
+
+    <!-- Letra E -->
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M31,36 L41,36 L41,38.5 L33.5,38.5 L33.5,40.5 L40,40.5 L40,43 L33.5,43 L33.5,45 L41,45 L41,47.5 L31,47.5 Z" />
+
+    <!-- Líneas de velocidad (izquierda del asa) -->
+    <path
+        android:fillColor="#A5D6A7"
+        android:pathData="M22,23 L27,23 L27,24.5 L22,24.5 Z" />
+    <path
+        android:fillColor="#A5D6A7"
+        android:pathData="M20,26 L26,26 L26,27.5 L20,27.5 Z" />
+
+</vector>

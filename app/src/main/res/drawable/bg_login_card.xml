@@ -1,0 +1,44 @@
+<!-- res/drawable/bg_login_card.xml -->
+<!-- Fondo blanco con esquinas superiores redondeadas para el card de login -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/surface" />
+    <corners
+        android:topLeftRadius="32dp"
+        android:topRightRadius="32dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp" />
+</shape>
+
+
+    <!-- ============================================================ -->
+    <!-- res/drawable/gradient_overlay_bottom.xml                     -->
+    <!-- Overlay degradado de transparente a blanco sobre la imagen   -->
+    <!-- ============================================================ -->
+
+    <!-- Guarda este contenido en gradient_overlay_bottom.xml por separado -->
+    <!--
+    <shape xmlns:android="http://schemas.android.com/apk/res/android">
+        <gradient
+            android:type="linear"
+            android:angle="270"
+            android:startColor="#00FAFAFA"
+            android:endColor="#FAFAFA" />
+    </shape>
+    -->
+
+
+    <!-- ============================================================ -->
+    <!-- res/drawable/bg_login_hero.xml                               -->
+    <!-- Hero background con degradado verde suave                    -->
+    <!-- ============================================================ -->
+
+    <!-- Guarda este contenido en bg_login_hero.xml por separado -->
+    <!--
+    <shape xmlns:android="http://schemas.android.com/apk/res/android">
+        <gradient
+            android:type="linear"
+            android:angle="180"
+            android:startColor="@color/hero_gradient_start"
+            android:endColor="@color/hero_gradient_end" />
+    </shape>
+    -->

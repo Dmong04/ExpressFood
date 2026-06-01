@@ -1,0 +1,46 @@
+<!-- res/values/colors.xml -->
+<resources>
+
+    <!-- === Paleta principal: Verde ExpressFood === -->
+    <!-- Primary — verde vibrante, identidad de la marca -->
+    <color name="primary">#2E7D32</color>          <!-- Verde oscuro / botones principales -->
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#B9F6CA</color> <!-- Verde pastel / fondos de chip -->
+    <color name="on_primary_container">#002106</color>
+
+    <!-- Secondary — verde claro cálido -->
+    <color name="secondary">#558B2F</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="secondary_container">#DCEDC8</color>
+    <color name="on_secondary_container">#1B2E00</color>
+
+    <!-- Tertiary — naranja cálido para acentos (icono bolsa, badges) -->
+    <color name="tertiary">#E65100</color>
+    <color name="on_tertiary">#FFFFFF</color>
+    <color name="tertiary_container">#FFE0B2</color>
+    <color name="on_tertiary_container">#3E1600</color>
+
+    <!-- === Superficies === -->
+    <color name="surface">#FAFAFA</color>
+    <color name="on_surface">#1C1B1F</color>
+    <color name="surface_variant">#F1F8E9</color>   <!-- Fondo verde muy claro para cards -->
+    <color name="on_surface_variant">#49454F</color>
+
+    <!-- Outline -->
+    <color name="outline">#79747E</color>
+    <color name="outline_variant">#E0E0E0</color>
+
+    <!-- Background -->
+    <color name="background">#FAFAFA</color>
+    <color name="on_background">#1C1B1F</color>
+
+    <!-- Error -->
+    <color name="error">#B00020</color>
+    <color name="on_error">#FFFFFF</color>
+    <color name="error_container">#FDECEA</color>
+
+    <!-- Hero background gradient (usado en el ilustración de fondo) -->
+    <color name="hero_gradient_start">#E8F5E9</color>   <!-- Verde muy claro arriba -->
+    <color name="hero_gradient_end">#C8E6C9</color>     <!-- Un poco más intenso abajo -->
+
+</resources>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/surface">
+
+    <!-- Fondo degradado hero -->
+    <ImageView
+        android:id="@+id/iv_background_illustration"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_login_hero"
+        android:contentDescription="@null" />
+
+    <!-- Overlay fade de imagen a fondo blanco -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:background="@drawable/gradient_overlay_bottom" />
+
+    <!-- Logo + tagline -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_expressfood_logo"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/app_name"
+            android:textAppearance="@style/TextAppearance.ExpressFood.DisplaySmall"
+            android:textColor="@color/on_surface" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/tagline"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textColor="@color/on_surface_variant" />
+
+    </LinearLayout>
+
+    <!-- Card de login — sube más con marginBottom mayor -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:background="@drawable/bg_login_card"
+        android:paddingHorizontal="28dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="48dp"
+        android:elevation="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_title"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+            android:textColor="@color/on_surface"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/login_subtitle"
+            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+            android:textColor="@color/on_surface_variant"
+            android:layout_gravity="center_horizontal" />
+
+        <!-- Botón Google Sign-In -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_google_sign_in"
+            style="@style/Widget.ExpressFood.Button.Google"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="28dp"
+            android:text="@string/btn_google_sign_in"
+            app:icon="@drawable/ic_google_logo"
+            app:iconGravity="textStart"
+            app:iconPadding="12dp"
+            app:cornerRadius="16dp" />
+
+        <!-- Indicador de carga -->
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progress_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:trackCornerRadius="4dp"
+            app:indicatorColor="@color/primary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/only_gmail_accounts"
+            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+            android:textColor="@color/on_surface_variant"
+            android:layout_gravity="center_horizontal" />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/outline_variant" />
+
+        <!-- Footer: ícono + texto en un solo TextView con drawableStart -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/footer_offline_sync"
+            android:textAppearance="@style/TextAppearance.Material3.LabelSmall"
+            android:textColor="@color/on_surface_variant"
+            android:drawableStart="@drawable/ic_offline"
+            android:drawablePadding="6dp"
+            android:gravity="center_vertical"
+            app:drawableTint="@color/on_surface_variant" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

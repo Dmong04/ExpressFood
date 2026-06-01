@@ -1,0 +1,17 @@
+<!-- res/values/strings.xml -->
+<resources>
+    <string name="app_name">ExpressFood</string>
+    <string name="tagline">Tu comida favorita, al instante</string>
+
+    <!-- Login -->
+    <string name="login_title">Iniciar sesión</string>
+    <string name="login_subtitle">Accede con tu cuenta de Google</string>
+    <string name="btn_google_sign_in">Continuar con Google</string>
+    <string name="btn_signing_in">Iniciando sesión…</string>
+    <string name="only_gmail_accounts">Solo cuentas @gmail.com</string>
+    <string name="footer_offline_sync">Funciona offline · Sincroniza al conectar</string>
+
+    <!-- Acciones -->
+    <string name="retry">Reintentar</string>
+    <string name="ok">OK</string>
+</resources>
