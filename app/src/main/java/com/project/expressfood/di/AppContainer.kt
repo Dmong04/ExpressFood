@@ -7,8 +7,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.project.expressfood.data.local.database.ExpressFoodDatabase
 import com.project.expressfood.data.remote.auth.AuthService
 import com.project.expressfood.data.remote.firestore.ItemFirestoreService
+import com.project.expressfood.data.remote.firestore.OrderFirestoreService
 import com.project.expressfood.data.remote.firestore.UserFirestoreService
 import com.project.expressfood.data.repository.AuthRepository
+import com.project.expressfood.data.repository.CartRepository
 import com.project.expressfood.data.repository.ItemRepository
 import com.project.expressfood.data.repository.OrderRepository
 
@@ -38,9 +40,11 @@ class AppContainer(context: Context) {
     val authService: AuthService by lazy { AuthService(firebaseAuth) }
     val userFirestoreService: UserFirestoreService by lazy { UserFirestoreService(firestore) }
     val itemFirestoreService: ItemFirestoreService by lazy { ItemFirestoreService(firestore) }
+    val orderFirestoreService: OrderFirestoreService by lazy { OrderFirestoreService(firestore) }
 
     // Repositories
     val authRepository: AuthRepository by lazy { AuthRepository(authService, userFirestoreService) }
     val itemRepository: ItemRepository by lazy { ItemRepository(database.itemDao(), itemFirestoreService) }
-    val orderRepository: OrderRepository by lazy { OrderRepository(database.orderDao()) }
+    val orderRepository: OrderRepository by lazy { OrderRepository(database.orderDao(), orderFirestoreService) }
+    val cartRepository: CartRepository by lazy { CartRepository(database.cartDao()) }
 }
