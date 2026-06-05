@@ -20,7 +20,7 @@ interface OrderDao {
     @Query("SELECT * FROM orders WHERE status = :status ORDER BY date DESC")
     fun getOrdersByStatus(status: String): Flow<List<OrderEntity>>
 
-    @Query("SELECT * FROM order_detail WHERE orderId = :orderId")
+    @Query("SELECT * FROM orderDetail WHERE orderId = :orderId")
     suspend fun getDetailsByOrder(orderId: String): List<OrderDetailEntity>
 
     @Query("SELECT * FROM orders WHERE synced = 0")

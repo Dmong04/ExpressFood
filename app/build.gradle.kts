@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -6,20 +8,21 @@ plugins {
 
 android {
     namespace = "com.project.expressfood"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.project.expressfood"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val localProps = gradleLocalProperties(rootDir, providers)
+
+        buildConfigField("String", "SUPABASE_URL", "\"${localProps["SUPABASE_URL"]}\"")
+        buildConfigField("String", "SUPABASE_ANON_KEY", "\"${localProps["SUPABASE_ANON_KEY"]}\"")
     }
 
     buildTypes {
@@ -36,11 +39,17 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
 
 dependencies {
+    // Supabase
+    implementation(platform(libs.supabase.bom))
+    implementation(libs.storage.kt)
+    implementation(libs.ktor.client.android)
+
     // Firebase BoM
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
@@ -75,7 +84,10 @@ dependencies {
     implementation(libs.kotlinx.coroutines.play.services)
 
     // Tests
+    testImplementation(libs.robolectric)
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
