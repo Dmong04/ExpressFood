@@ -13,7 +13,7 @@ class SupabaseStorageService(private val context: Context) {
 
     private val client = createSupabaseClient(
         supabaseUrl = BuildConfig.SUPABASE_URL,
-        supabaseKey = BuildConfig.SUPABASE_ANON_KEY,
+        supabaseKey = BuildConfig.SUPABASE_SERVICE_KEY,
     ) {
         install(Storage)
     }
