@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/clientHomeFragment">
+
+<!--    <fragment-->
+<!--        android:id="@+id/loginFragment"-->
+<!--        android:name="com.project.expressfood.ui.auth.LoginFragment"-->
+<!--        android:label="Login" />-->
+
+    <fragment
+        android:id="@+id/clientHomeFragment"
+        android:name="com.project.expressfood.ui.client.home.ClientHomeFragment"
+        android:label="Menú" />
+
+<!--    <fragment-->
+<!--        android:id="@+id/adminPanelFragment"-->
+<!--        android:name="com.project.expressfood.ui.admin.AdminPanelFragment"-->
+<!--        android:label="Panel Admin" />-->
+
+<!--    <action-->
+<!--        android:id="@+id/action_login_to_client"-->
+<!--        app:destination="@id/clientHomeFragment"-->
+<!--        app:popUpTo="@id/loginFragment"-->
+<!--        app:popUpToInclusive="true" />-->
+
+<!--    <action-->
+<!--        android:id="@+id/action_login_to_admin"-->
+<!--        app:destination="@id/adminPanelFragment"-->
+<!--        app:popUpTo="@id/loginFragment"-->
+<!--        app:popUpToInclusive="true" />-->
+
+</navigation>
