@@ -3,7 +3,6 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
     id("com.google.gms.google-services")
 }
 
@@ -42,24 +41,14 @@ android {
     buildFeatures {
         buildConfig = true
         compose = true
-        viewBinding = true
     }
 }
 
 dependencies {
     // Supabase
     implementation(platform(libs.supabase.bom))
-    implementation(libs.androidx.navigation.fragment)
-    implementation(libs.androidx.navigation.ui)
     implementation(libs.storage.kt)
     implementation(libs.ktor.client.android)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.lifecycle.viewmodel.ktx)
-    implementation(libs.glide)
-
 
     // Firebase BoM
     implementation(platform(libs.firebase.bom))
@@ -89,7 +78,6 @@ dependencies {
     // Room (runtime + ktx — el compiler se agrega cuando se resuelva la versión de KSP)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
