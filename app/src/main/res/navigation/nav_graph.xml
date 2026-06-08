@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@+id/clientHomeFragment">
+    app:startDestination="@id/clientHomeFragment">
 
 <!--    <fragment-->
 <!--        android:id="@+id/loginFragment"-->
@@ -13,11 +13,6 @@
         android:id="@+id/clientHomeFragment"
         android:name="com.project.expressfood.ui.client.home.ClientHomeFragment"
         android:label="Menú" />
-
-    <fragment
-        android:id="@+id/cartFragment"
-        android:name="com.project.expressfood.ui.client.cart.CartFragment"
-        android:label="Cart" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/adminPanelFragment"-->
