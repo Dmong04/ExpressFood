@@ -57,6 +57,7 @@ release.properties
 .env
 .env.*
 !.env.example               # sí se puede versionar el ejemplo
+local.properties
 
 # ── Node.js (scripts/ de Firestore) ──────────────────────────────
 node_modules/

@@ -20,7 +20,7 @@ import java.io.File
 import java.net.URL
 
 /**
- * Seeder de integración real — sube imagen a Supabase y guarda en Firestore.
+ * Seeder de integración real — sube imágenes a Supabase y guarda en Firestore.
  * El DAO se implementa como fake inline — sin MockK, sin Room.
  * Ejecutar con dispositivo/emulador conectado.
  */
@@ -52,12 +52,13 @@ class ProductSeederTest {
         repository = ProductRepository(productDao, firestoreService, supabaseService)
     }
 
+    // ─── Hamburguesa Clásica ───────────────────────────────────────────────────
+
     @Test
-    fun seedHamburguesaClasicaConImagenAFirestoreYSupabase() {
+    fun seedHamburguesaClasica() {
         runBlocking {
             val context = InstrumentationRegistry.getInstrumentation().targetContext
 
-            // ── 1. Definir el producto ────────────────────────────────────
             val product = Product(
                 id                   = "hamburguesa_clasica",
                 name                 = "Hamburguesa Clásica",
@@ -75,34 +76,75 @@ class ProductSeederTest {
                     "Queso cheddar",
                     "Salsa especial",
                 ),
-                rating               = 4.5,
+                rating = 4.5,
             )
 
-            // ── 2. Descargar imagen a archivo temporal ────────────────────
             val imageUrl = "https://www.saborusa.com/wp-content/uploads/2019/10/67.-Hamburguesa-de-carne.png"
-            val tempFile = File(context.cacheDir, "hamburguesa_clasica.jpg")
+            val imageUri = downloadImage(context.cacheDir, imageUrl, "hamburguesa_clasica.jpg")
 
-            println("Descargando imagen desde: $imageUrl")
-            URL(imageUrl).openStream().use { input ->
-                tempFile.outputStream().use { output -> input.copyTo(output) }
-            }
-            assertTrue("La imagen descargada debe tener contenido", tempFile.length() > 0)
-            println("Imagen descargada: ${tempFile.length()} bytes")
-
-            val imageUri: Uri = tempFile.toUri()
-
-            // ── 3. Subir producto con imagen ──────────────────────────────
-            println("Subiendo producto a Supabase + Firestore...")
+            println("Subiendo Hamburguesa Clásica...")
             val result = repository.createProduct(product = product, imageUri = imageUri)
 
             println("Resultado: $result")
             result.exceptionOrNull()?.printStackTrace()
-
-            assertTrue("El producto debe crearse exitosamente", result.isSuccess)
+            assertTrue("Hamburguesa Clásica debe crearse exitosamente", result.isSuccess)
             println("Producto creado con ID: ${result.getOrNull()}")
 
-            // ── 4. Limpiar archivo temporal ───────────────────────────────
-            tempFile.delete()
+            File(context.cacheDir, "hamburguesa_clasica.jpg").delete()
         }
+    }
+
+    // ─── Hamburguesa BBQ ──────────────────────────────────────────────────────
+
+    @Test
+    fun seedHamburguesaBBQ() {
+        runBlocking {
+            val context = InstrumentationRegistry.getInstrumentation().targetContext
+
+            val product = Product(
+                id                   = "hamburguesa_bbq",
+                name                 = "Hamburguesa BBQ",
+                description          = "Carne de res con salsa BBQ ahumada, cebolla caramelizada y tocino crujiente.",
+                price                = 5200.0,
+                estimatedTimeMinutes = 18,
+                imageUrl             = "",
+                available            = true,
+                category             = "hamburguesas",
+                ingredients          = listOf(
+                    "Carne de res",
+                    "Salsa BBQ",
+                    "Cebolla caramelizada",
+                    "Tocino",
+                    "Pan brioche",
+                ),
+                rating = 4.7,
+            )
+
+            val imageUrl = "https://bsstatic2.mrjack.es/wp-content/uploads/2020/09/hamburguesa-bbq-cab.jpg"
+            val imageUri = downloadImage(context.cacheDir, imageUrl, "hamburguesa_bbq.jpg")
+
+            println("Subiendo Hamburguesa BBQ...")
+            val result = repository.createProduct(product = product, imageUri = imageUri)
+
+            println("Resultado: $result")
+            result.exceptionOrNull()?.printStackTrace()
+            assertTrue("Hamburguesa BBQ debe crearse exitosamente", result.isSuccess)
+            println("Producto creado con ID: ${result.getOrNull()}")
+
+            File(context.cacheDir, "hamburguesa_bbq.jpg").delete()
+        }
+    }
+
+    // ─── Helper ───────────────────────────────────────────────────────────────
+
+    private fun downloadImage(cacheDir: File, imageUrl: String, fileName: String): Uri {
+        val tempFile = File(cacheDir, fileName)
+        println("Descargando imagen desde: $imageUrl")
+        URL(imageUrl).openStream().use { input ->
+            tempFile.outputStream().use { output -> input.copyTo(output) }
+        }
+        assertTrue("La imagen descargada debe tener contenido", tempFile.length() > 0)
+        println("Imagen descargada: ${tempFile.length()} bytes")
+        return tempFile.toUri()
     }
 }
