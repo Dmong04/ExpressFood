@@ -17,7 +17,7 @@ import com.project.expressfood.data.local.entity.OrderEntity
         OrderDetailEntity::class,
         CartItemEntity::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class ExpressFoodDatabase : RoomDatabase() {

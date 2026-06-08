@@ -74,6 +74,7 @@ dependencies {
     // ViewModel + Navigation Compose
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.navigation.compose)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 
     // Room (runtime + ktx — el compiler se agrega cuando se resuelva la versión de KSP)
     implementation(libs.room.runtime)
