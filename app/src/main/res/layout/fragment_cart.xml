@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:title="Mi carrito"
+        android:title="@string/mi_carrito"
         style="@style/Widget.Material3.Toolbar" />
 
     <!-- Lista de items -->
@@ -45,7 +45,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Subtotal"
+                    android:text="@string/subtotal"
                     android:textAppearance="?attr/textAppearanceBodyMedium" />
                 <TextView
                     android:id="@+id/tvSubtotal"
@@ -64,7 +64,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="IVA (13%)"
+                    android:text="@string/iva_13"
                     android:textAppearance="?attr/textAppearanceBodyMedium"
                     android:textColor="?attr/colorOnSurfaceVariant" />
                 <TextView
@@ -90,7 +90,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Total"
+                    android:text="@string/total"
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
                 <TextView
                     android:id="@+id/tvTotal"
@@ -104,7 +104,7 @@
                 android:id="@+id/btnCheckout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Procesar orden" />
+                android:text="@string/procesar_orden" />
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

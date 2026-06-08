@@ -3,6 +3,7 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
     id("com.google.gms.google-services")
 }
 
@@ -39,12 +40,19 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
+        viewBinding = true
         buildConfig = true
         compose = true
     }
 }
 
 dependencies {
+    ksp(libs.room.compiler)
+
+    // Material Design
+    implementation(libs.material.v1140)
+    implementation(libs.androidx.recyclerview)
+
     // Supabase
     implementation(platform(libs.supabase.bom))
     implementation(libs.storage.kt)
@@ -72,6 +80,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     // ViewModel + Navigation Compose
+    implementation(libs.androidx.fragment.ktx.v189)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.navigation.compose)
     implementation(libs.androidx.lifecycle.livedata.ktx)

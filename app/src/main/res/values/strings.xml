@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ExpressFood</string>
+    <string name="mi_carrito">Mi carrito</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="iva_13">IVA (13%)</string>
+    <string name="total">Total</string>
+    <string name="procesar_orden">Procesar orden</string>
 </resources>

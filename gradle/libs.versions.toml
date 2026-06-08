@@ -3,6 +3,7 @@ agp = "9.2.1"
 coreKtx = "1.19.0"
 credentials = "1.6.0"
 firebaseBom = "34.14.0"
+fragmentKtxVersion = "1.8.9"
 googleid = "1.2.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
@@ -14,12 +15,15 @@ activityCompose = "1.13.0"
 kotlin = "2.4.0"
 composeBom = "2026.05.01"
 # Nuevas dependencias MVVM
+materialVersion = "1.14.0"
 mockk = "1.14.11"
+recyclerview = "1.4.0"
 robolectric = "4.16.1"
 room = "2.8.4"
 hilt = "2.59.2"
 coroutines = "1.11.0"
 navigationCompose = "2.9.8"
+roomCompiler = "2.5.0"
 storageKt = "3.1.3"
 supabase = "3.1.3"
 navigationFragment = "2.9.8"
@@ -31,7 +35,11 @@ glide = "4.16.0"
 ksp = "2.3.9"
 
 [libraries]
+androidx-fragment-ktx-v189 = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtxVersion" }
+androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+androidx-room-compiler-v250 = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+material-v1140 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 robolectric = { module = "org.robolectric:robolectric", version.ref = "robolectric" }
 supabase-bom = { module = "io.github.jan-tennert.supabase:bom", version.ref = "supabase" }
