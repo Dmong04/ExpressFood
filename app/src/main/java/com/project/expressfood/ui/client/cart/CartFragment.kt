@@ -1,0 +1,75 @@
+package com.project.expressfood.ui.client.cart
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.expressfood.ExpressFoodApp
+import com.project.expressfood.databinding.FragmentCartBinding
+import java.text.NumberFormat
+import java.util.Locale
+import kotlinx.coroutines.launch
+
+class CartFragment : Fragment() {
+
+    private var _binding: FragmentCartBinding? = null
+    private val binding get() = _binding!!
+
+    private val currency = NumberFormat.getCurrencyInstance(Locale("es", "CR"))
+
+    private val viewModel: CartViewModel by viewModels {
+        val app = requireActivity().application as ExpressFoodApp
+        val clientId = app.container.authRepository.currentUser?.uid ?: ""
+        CartViewModelFactory(app.container.cartRepository, app.container.productRepository, clientId)
+    }
+
+    private lateinit var adapter: CartAdapter
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentCartBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        observeCart()
+        observeSummary()
+    }
+
+    private fun setupRecyclerView() {
+        adapter = CartAdapter(
+            onIncrement = { item ->
+                viewLifecycleOwner.lifecycleScope.launch { viewModel.incrementItem(item) }
+            },
+            onDecrement = { item ->
+                viewLifecycleOwner.lifecycleScope.launch { viewModel.decrementItem(item) }
+            },
+        )
+        binding.rvCartItems.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvCartItems.adapter = adapter
+    }
+
+    private fun observeCart() {
+        viewModel.cartItems.observe(viewLifecycleOwner) { items ->
+            adapter.submitList(items)
+        }
+    }
+
+    private fun observeSummary() {
+        viewModel.summary.observe(viewLifecycleOwner) { s ->
+            binding.tvSubtotal.text = currency.format(s.subtotal)
+            binding.tvTax.text      = currency.format(s.tax)
+            binding.tvTotal.text    = currency.format(s.total)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

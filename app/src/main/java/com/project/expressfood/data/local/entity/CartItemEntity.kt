@@ -9,4 +9,5 @@ data class CartItemEntity(
     val clientId: String,
     val itemId: String,
     val quantity: Int,
+    val unitPrice: Double = 0.0,   // nuevo
 )

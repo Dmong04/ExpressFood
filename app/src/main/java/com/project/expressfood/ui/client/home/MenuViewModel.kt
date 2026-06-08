@@ -50,6 +50,7 @@ class MenuViewModel(
                     clientId   = clientId,
                     itemId     = product.id,
                     quantity   = 1,
+                    unitPrice  = product.price,
                 )
             )
             _cartEvent.emit("${product.name} agregado al carrito")
