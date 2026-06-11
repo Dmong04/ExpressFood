@@ -3,6 +3,7 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
     id("com.google.gms.google-services")
 }
 
@@ -41,16 +42,33 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
+        viewBinding = true
         buildConfig = true
         compose = true
+        viewBinding = true
     }
 }
 
 dependencies {
+    ksp(libs.room.compiler)
+
+    // Material Design
+    implementation(libs.material.v1140)
+    implementation(libs.androidx.recyclerview)
+
     // Supabase
     implementation(platform(libs.supabase.bom))
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
     implementation(libs.storage.kt)
     implementation(libs.ktor.client.android)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.glide)
+
 
     // Firebase BoM
     implementation(platform(libs.firebase.bom))
@@ -74,12 +92,15 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     // ViewModel + Navigation Compose
+    implementation(libs.androidx.fragment.ktx.v189)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.navigation.compose)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 
     // Room (runtime + ktx — el compiler se agrega cuando se resuelva la versión de KSP)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)

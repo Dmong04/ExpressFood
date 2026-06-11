@@ -20,6 +20,17 @@ class CartRepository(private val cartDao: CartDao) {
     suspend fun clearCart(clientId: String) =
         cartDao.clearByClient(clientId)
 
+    suspend fun incrementQuantity(item: CartItem) =
+        cartDao.incrementQuantity(item.cartItemId)
+
+    suspend fun decrementOrRemove(item: CartItem) {
+        if (item.quantity > 1) {
+            cartDao.decrementQuantity(item.cartItemId)
+        } else {
+            cartDao.delete(item.toEntity())
+        }
+    }
+
     // ── Mappers ───────────────────────────────────────────────────
 
     private fun CartItemEntity.toDomain() = CartItem(
@@ -27,6 +38,7 @@ class CartRepository(private val cartDao: CartDao) {
         clientId   = clientId,
         itemId     = itemId,
         quantity   = quantity,
+        unitPrice  = unitPrice,
     )
 
     private fun CartItem.toEntity() = CartItemEntity(
@@ -34,5 +46,6 @@ class CartRepository(private val cartDao: CartDao) {
         clientId   = clientId,
         itemId     = itemId,
         quantity   = quantity,
+        unitPrice  = unitPrice,
     )
 }

@@ -2,26 +2,16 @@
 package com.project.expressfood
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import com.project.expressfood.ui.auth.AuthViewModel
-import com.project.expressfood.ui.navigation.AppNavigation
-import com.project.expressfood.ui.theme.ExpressFoodTheme
+import androidx.appcompat.app.AppCompatActivity
+import com.project.expressfood.databinding.ActivityMainBinding
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val container = (application as ExpressFoodApp).container
-        val authViewModel: AuthViewModel by viewModels {
-            AuthViewModel.Factory(container.authRepository)
-        }
-
-        setContent {
-            ExpressFoodTheme {
-                AppNavigation(authViewModel = authViewModel)
-            }
-        }
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
 }
