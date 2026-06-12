@@ -35,6 +35,9 @@ class ProductRepository(
     fun searchProducts(query: String): Flow<List<Product>> =
         productDao.search(query).map { entities -> entities.map { it.toDomain() } }
 
+    suspend fun getProductById(id: String): Product? =
+        productDao.getById(id)?.toDomain()
+
     // ─── SYNC ──────────────────────────────────────────────────────────────
 
     /** Descarga los productos activos desde Firestore y los guarda en Room. */

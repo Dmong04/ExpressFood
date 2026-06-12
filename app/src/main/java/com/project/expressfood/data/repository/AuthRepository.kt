@@ -6,6 +6,7 @@ import com.project.expressfood.data.remote.firestore.UserFirestoreService
 import com.project.expressfood.domain.model.User
 import com.project.expressfood.domain.model.UserRole
 import kotlinx.coroutines.flow.Flow
+import android.content.Context
 
 class AuthRepository(
     private val authService: AuthService,
@@ -30,6 +31,11 @@ class AuthRepository(
                     createdAt    = System.currentTimeMillis(),
                 ).also { userFirestoreService.createUser(it) }
             }
+    }
+
+    suspend fun signInWithGoogle(context: Context): User {
+        val firebaseUser = authService.signInWithGoogle(context)
+        return getOrCreateUser(firebaseUser)
     }
 
     fun signOut() = authService.signOut()

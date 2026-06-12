@@ -1,3 +1,4 @@
+// MainActivity.kt
 package com.project.expressfood
 
 import android.os.Bundle

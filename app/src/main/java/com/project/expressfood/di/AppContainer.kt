@@ -43,7 +43,13 @@ class AppContainer(context: Context) {
     }
 
     // Remote services
-    val authService: AuthService by lazy { AuthService(firebaseAuth) }
+    val authService: AuthService by lazy {
+        AuthService(
+            auth        = firebaseAuth,
+            webClientId = com.project.expressfood.BuildConfig.WEB_CLIENT_ID
+        )
+    }
+
     val userFirestoreService: UserFirestoreService by lazy { UserFirestoreService(firestore) }
     val productFirestoreService: ProductFirestoreService by lazy { ProductFirestoreService(firestore) }
     val orderFirestoreService: OrderFirestoreService by lazy { OrderFirestoreService(firestore) }

@@ -13,6 +13,7 @@ import com.project.expressfood.databinding.FragmentCartBinding
 import java.text.NumberFormat
 import java.util.Locale
 import kotlinx.coroutines.launch
+import androidx.navigation.fragment.findNavController
 
 class CartFragment : Fragment() {
 
@@ -34,12 +35,21 @@ class CartFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         observeCart()
         observeSummary()
+
+        // ← agregar esto
+        binding.toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
     }
+
+
+
 
     private fun setupRecyclerView() {
         adapter = CartAdapter(
@@ -55,7 +65,7 @@ class CartFragment : Fragment() {
     }
 
     private fun observeCart() {
-        viewModel.cartItems.observe(viewLifecycleOwner) { items ->
+        viewModel.cartItemsWithProducts.observe(viewLifecycleOwner) { items ->
             adapter.submitList(items)
         }
     }

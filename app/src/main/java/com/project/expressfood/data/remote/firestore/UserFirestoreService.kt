@@ -1,3 +1,4 @@
+// data/remote/firestore/UserFirestoreService.kt
 package com.project.expressfood.data.remote.firestore
 
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,13 +16,17 @@ class UserFirestoreService(private val firestore: FirebaseFirestore) {
             if (doc.exists()) {
                 User(
                     uid          = uid,
-                    firstName    = doc.getString("firstName") ?: "",
-                    lastName     = doc.getString("lastName") ?: "",
-                    phone        = doc.getString("phone") ?: "",
+                    email        = doc.getString("email")        ?: "",
+                    displayName  = doc.getString("displayName")  ?: "",
+                    firstName    = doc.getString("firstName")    ?: "",
+                    lastName     = doc.getString("lastName")     ?: "",
+                    phone        = doc.getString("phone")        ?: "",
                     profilePhoto = doc.getString("profilePhoto") ?: "",
-                    role         = UserRole.valueOf(doc.getString("role") ?: UserRole.CLIENT.name),
-                    address      = doc.getString("address") ?: "",
-                    createdAt    = doc.getLong("createdAt") ?: 0L,
+                    role         = UserRole.valueOf(
+                        doc.getString("role") ?: UserRole.CLIENT.name
+                    ),
+                    address      = doc.getString("address")      ?: "",
+                    createdAt    = doc.getLong("createdAt")      ?: 0L,
                 )
             } else null
         } catch (e: Exception) {
@@ -32,6 +37,8 @@ class UserFirestoreService(private val firestore: FirebaseFirestore) {
     suspend fun createUser(user: User) {
         usersCollection.document(user.uid).set(
             mapOf(
+                "email"        to user.email,        // ← requerido por reglas
+                "displayName"  to user.displayName,  // ← requerido por reglas
                 "firstName"    to user.firstName,
                 "lastName"     to user.lastName,
                 "phone"        to user.phone,
