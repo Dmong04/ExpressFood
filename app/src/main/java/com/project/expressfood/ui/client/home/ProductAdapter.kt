@@ -36,7 +36,7 @@ class ProductAdapter(
 
             binding.cardItem.setOnClickListener { onProductClick(product) }
         }
-    }  // ← cierra ProductViewHolder
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ProductViewHolder(
