@@ -20,12 +20,12 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        // Usamos gradleLocalProperties que es más amigable con Gradle Kotlin DSL
         val localProps = gradleLocalProperties(rootDir, providers)
-
-
-        buildConfigField("String", "WEB_CLIENT_ID", "\"${localProps["WEB_CLIENT_ID"]}\"")
-        buildConfigField("String", "SUPABASE_URL", "\"${localProps["SUPABASE_URL"]}\"")
-        buildConfigField("String", "SUPABASE_SERVICE_KEY", "\"${localProps["SUPABASE_SERVICE_KEY"]}\"")
+        
+        buildConfigField("String", "WEB_CLIENT_ID", "\"${localProps["WEB_CLIENT_ID"] ?: ""}\"")
+        buildConfigField("String", "SUPABASE_URL", "\"${localProps["SUPABASE_URL"] ?: ""}\"")
+        buildConfigField("String", "SUPABASE_SERVICE_KEY", "\"${localProps["SUPABASE_SERVICE_KEY"] ?: ""}\"")
     }
 
     buildTypes {
@@ -45,7 +45,6 @@ android {
         viewBinding = true
         buildConfig = true
         compose = true
-        viewBinding = true
     }
 }
 
@@ -97,7 +96,7 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.androidx.lifecycle.livedata.ktx)
 
-    // Room (runtime + ktx — el compiler se agrega cuando se resuelva la versión de KSP)
+    // Room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
