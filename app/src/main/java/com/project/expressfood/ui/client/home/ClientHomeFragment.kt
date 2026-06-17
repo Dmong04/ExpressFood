@@ -26,10 +26,13 @@ class ClientHomeFragment : Fragment() {
     private val viewModel: MenuViewModel by viewModels {
         val app = requireActivity().application as ExpressFoodApp
         val clientId = app.container.authRepository.currentUser?.uid ?: ""
-        MenuViewModelFactory(app.container.productRepository, app.container.cartRepository, clientId)
+        MenuViewModelFactory(
+            app.container.productRepository,
+            app.container.cartRepository,
+            clientId,
+            app.container.networkMonitor,
+        )
     }
-
-
 
     private lateinit var adapter: ProductAdapter
 
@@ -44,9 +47,9 @@ class ClientHomeFragment : Fragment() {
         setupSearch()
         observeProducts()
         observeCartEvents()
+        observeNetworkStatus()
         viewModel.syncMenu()
 
-        // ← aquí
         binding.fabCart.setOnClickListener {
             findNavController().navigate(R.id.action_clientHomeFragment_to_cartFragment)
         }
@@ -77,6 +80,16 @@ class ClientHomeFragment : Fragment() {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.cartEvent.collect { message ->
                     Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun observeNetworkStatus() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isOnline.collect { online ->
+                    binding.layoutOfflineBanner.visibility = if (online) View.GONE else View.VISIBLE
                 }
             }
         }
