@@ -14,6 +14,7 @@ import com.project.expressfood.data.repository.AuthRepository
 import com.project.expressfood.data.repository.CartRepository
 import com.project.expressfood.data.repository.ProductRepository
 import com.project.expressfood.data.repository.OrderRepository
+import com.project.expressfood.data.util.NetworkMonitor
 
 /**
  * Contenedor de dependencias (DI manual).
@@ -59,4 +60,6 @@ class AppContainer(context: Context) {
     val productRepository: ProductRepository by lazy { ProductRepository(database.productDao(), productFirestoreService, supabaseStorageService) }
     val orderRepository: OrderRepository by lazy { OrderRepository(database.orderDao(), orderFirestoreService) }
     val cartRepository: CartRepository by lazy { CartRepository(database.cartDao()) }
+
+    val networkMonitor: NetworkMonitor by lazy { NetworkMonitor(context) }
 }
