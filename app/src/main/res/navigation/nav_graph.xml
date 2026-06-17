@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@+id/clientHomeFragment">
+    app:startDestination="@id/clientHomeFragment">
 
 <!--    <fragment-->
 <!--        android:id="@+id/loginFragment"-->
@@ -17,7 +17,18 @@
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.project.expressfood.ui.client.cart.CartFragment"
-        android:label="Cart" />
+        android:label="Mi Carrito">
+
+        <action
+            android:id="@+id/action_cartFragment_to_clientHome"
+            app:destination="@id/clientHomeFragment"
+            app:popUpTo="@id/clientHomeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_clientHomeFragment_to_cartFragment"
+        app:destination="@id/cartFragment" />
 
 <!--    <fragment-->
 <!--        android:id="@+id/adminPanelFragment"-->

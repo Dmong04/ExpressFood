@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "37782324999-7l6rouev3ufoa8ebeqk7ussioijlf41m.apps.googleusercontent.com",
+          "client_id": "37782324999-febbefjd5nduu7t36iimctjiu5h5fkf6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.project.expressfood",
-            "certificate_hash": "74328bd8ba70db4d224550c8413c33108b2d9230"
+            "certificate_hash": "9c6b72d3035601a87d234a24396355917793471e"
           }
         },
         {

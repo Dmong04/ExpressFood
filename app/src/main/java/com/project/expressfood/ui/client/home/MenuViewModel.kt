@@ -6,11 +6,14 @@ import com.project.expressfood.data.repository.CartRepository
 import com.project.expressfood.data.repository.ProductRepository
 import com.project.expressfood.domain.model.CartItem
 import com.project.expressfood.domain.model.Product
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.UUID
 
@@ -22,20 +25,17 @@ class MenuViewModel(
 
     private val _searchQuery = MutableStateFlow("")
 
-    val products: StateFlow<List<Product>> = run {
-        val result = MutableStateFlow<List<Product>>(emptyList())
-        viewModelScope.launch {
-            // Usa searchProducts de Room cuando hay query, activeProducts cuando está vacío
-            _searchQuery.collect { query ->
-                if (query.isBlank()) {
-                    productRepository.activeProducts.collect { result.value = it }
-                } else {
-                    productRepository.searchProducts(query).collect { result.value = it }
-                }
-            }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val products: StateFlow<List<Product>> = _searchQuery
+        .flatMapLatest { query ->
+            if (query.isBlank()) productRepository.activeProducts
+            else productRepository.searchProducts(query)
         }
-        result
-    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = emptyList()
+        )
 
     private val _cartEvent = MutableSharedFlow<String>()
     val cartEvent: SharedFlow<String> = _cartEvent

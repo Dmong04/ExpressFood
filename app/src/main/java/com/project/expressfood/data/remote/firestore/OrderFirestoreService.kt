@@ -23,6 +23,7 @@ class OrderFirestoreService(private val firestore: FirebaseFirestore) {
                 "synced"     to true,
             )
             ordersCollection.document(order.orderId).set(orderData).await()
+            android.util.Log.d("OrderSync", "Order pushed: ${order.orderId}, details count: ${details.size}")
 
             details.forEach { detail ->
                 val detailData = mapOf(
@@ -33,9 +34,10 @@ class OrderFirestoreService(private val firestore: FirebaseFirestore) {
                     "rating"    to detail.rating,
                 )
                 detailsCollection.document(detail.detailId).set(detailData).await()
+                android.util.Log.d("OrderSync", "Detail pushed: ${detail.detailId}")
             }
         } catch (e: Exception) {
-            // Falla silenciosa — WorkManager reintentará
+            android.util.Log.e("OrderSync", "pushOrder failed for order ${order.orderId}", e)
         }
     }
 
@@ -78,7 +80,6 @@ class OrderFirestoreService(private val firestore: FirebaseFirestore) {
     }
 
     // ── Obtener todas las órdenes (admin) ─────────────────────────
-
     suspend fun getAllOrders(): List<OrderEntity> {
         return try {
             ordersCollection

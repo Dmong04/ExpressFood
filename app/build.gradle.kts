@@ -22,8 +22,10 @@ android {
 
         val localProps = gradleLocalProperties(rootDir, providers)
 
+
+        buildConfigField("String", "WEB_CLIENT_ID", "\"${localProps["WEB_CLIENT_ID"]}\"")
         buildConfigField("String", "SUPABASE_URL", "\"${localProps["SUPABASE_URL"]}\"")
-        buildConfigField("String", "SUPABASE_ANON_KEY", "\"${localProps["SUPABASE_ANON_KEY"]}\"")
+        buildConfigField("String", "SUPABASE_SERVICE_KEY", "\"${localProps["SUPABASE_SERVICE_KEY"]}\"")
     }
 
     buildTypes {
@@ -40,6 +42,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     buildFeatures {
+        viewBinding = true
         buildConfig = true
         compose = true
         viewBinding = true
@@ -47,6 +50,12 @@ android {
 }
 
 dependencies {
+    ksp(libs.room.compiler)
+
+    // Material Design
+    implementation(libs.material.v1140)
+    implementation(libs.androidx.recyclerview)
+
     // Supabase
     implementation(platform(libs.supabase.bom))
     implementation(libs.androidx.navigation.fragment)
@@ -83,6 +92,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     // ViewModel + Navigation Compose
+    implementation(libs.androidx.fragment.ktx.v189)
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.navigation.compose)
     implementation(libs.androidx.lifecycle.livedata.ktx)
@@ -95,6 +105,7 @@ dependencies {
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.play.services)
+    implementation(libs.androidx.work.runtime.ktx)
 
     // Tests
     testImplementation(libs.robolectric)

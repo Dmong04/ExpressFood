@@ -37,20 +37,20 @@ class OrderRepository(
         orderDao.upsertDetails(order.details.map { it.toEntity() })
     }
 
-    /*suspend fun updateStatus(orderId: String, newStatus: OrderStatus) {
+    suspend fun updateStatus(orderId: String, newStatus: OrderStatus) {
         orderDao.updateStatus(orderId, newStatus.name)
         orderFirestoreService.updateStatus(orderId, newStatus.name)
-    }*/
+    }
 
     // ── Sincronización (WorkManager) ──────────────────────────────
 
-    /*suspend fun syncPendingOrders() {
+    suspend fun syncPendingOrders() {
         orderDao.getUnsynced().forEach { entity ->
             val details = orderDao.getDetailsByOrder(entity.orderId)
             orderFirestoreService.pushOrder(entity, details)
             orderDao.markSynced(entity.orderId)
         }
-    }*/
+    }
 
     // ── Mappers ───────────────────────────────────────────────────
 

@@ -15,6 +15,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.project.expressfood.ExpressFoodApp
 import com.project.expressfood.databinding.FragmentClientHomeBinding
 import kotlinx.coroutines.launch
+import androidx.navigation.fragment.findNavController
+import com.project.expressfood.R
 
 class ClientHomeFragment : Fragment() {
 
@@ -26,6 +28,8 @@ class ClientHomeFragment : Fragment() {
         val clientId = app.container.authRepository.currentUser?.uid ?: ""
         MenuViewModelFactory(app.container.productRepository, app.container.cartRepository, clientId)
     }
+
+
 
     private lateinit var adapter: ProductAdapter
 
@@ -41,6 +45,11 @@ class ClientHomeFragment : Fragment() {
         observeProducts()
         observeCartEvents()
         viewModel.syncMenu()
+
+        // ← aquí
+        binding.fabCart.setOnClickListener {
+            findNavController().navigate(R.id.action_clientHomeFragment_to_cartFragment)
+        }
     }
 
     private fun setupRecyclerView() {
