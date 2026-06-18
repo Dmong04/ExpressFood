@@ -21,6 +21,14 @@ class OrderRepository(
     fun getAllOrders(): Flow<List<Order>> =
         orderDao.getAllOrders().map { it.map { e -> e.toDomain() } }
 
+    // ── Tiempo real desde Firestore (admin cambia → cliente ve) ───
+
+    fun watchOrdersByClient(clientId: String): Flow<List<Order>> =
+        orderFirestoreService.watchOrdersByClient(clientId).map { it.map { e -> e.toDomain() } }
+
+    fun watchAllOrders(): Flow<List<Order>> =
+        orderFirestoreService.watchAllOrders().map { it.map { e -> e.toDomain() } }
+
     fun getOrdersByStatus(status: OrderStatus): Flow<List<Order>> =
         orderDao.getOrdersByStatus(status.name).map { it.map { e -> e.toDomain() } }
 
@@ -37,20 +45,20 @@ class OrderRepository(
         orderDao.upsertDetails(order.details.map { it.toEntity() })
     }
 
-    /*suspend fun updateStatus(orderId: String, newStatus: OrderStatus) {
+    suspend fun updateStatus(orderId: String, newStatus: OrderStatus) {
         orderDao.updateStatus(orderId, newStatus.name)
         orderFirestoreService.updateStatus(orderId, newStatus.name)
-    }*/
+    }
 
     // ── Sincronización (WorkManager) ──────────────────────────────
 
-    /*suspend fun syncPendingOrders() {
+    suspend fun syncPendingOrders() {
         orderDao.getUnsynced().forEach { entity ->
             val details = orderDao.getDetailsByOrder(entity.orderId)
             orderFirestoreService.pushOrder(entity, details)
             orderDao.markSynced(entity.orderId)
         }
-    }*/
+    }
 
     // ── Mappers ───────────────────────────────────────────────────
 

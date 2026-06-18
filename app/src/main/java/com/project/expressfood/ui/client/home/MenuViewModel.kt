@@ -16,12 +16,21 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.UUID
+import com.project.expressfood.data.util.NetworkMonitor
 
 class MenuViewModel(
     private val productRepository: ProductRepository,
     private val cartRepository: CartRepository,
     private val clientId: String,
+    networkMonitor: NetworkMonitor,
 ) : ViewModel() {
+
+    val isOnline: StateFlow<Boolean> = networkMonitor.observe()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), true)
+
+    val cartItemCount: StateFlow<Int> = cartRepository
+        .getCartItemCount(clientId)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
 
     private val _searchQuery = MutableStateFlow("")
 

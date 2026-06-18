@@ -21,6 +21,35 @@
             android:title="ExpressFood"
             style="@style/Widget.Material3.Toolbar" />
 
+        <!-- Banner offline -->
+        <LinearLayout
+            android:id="@+id/layoutOfflineBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/error_container"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_offline"
+                android:contentDescription="@null"
+                app:tint="@color/error" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="Sin conexión — modo offline"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:textColor="@color/error" />
+
+        </LinearLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,6 +80,18 @@
             tools:listitem="@layout/item_menu" />
 
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabOrders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="88dp"
+        android:src="@drawable/ic_orders"
+        android:contentDescription="Mis órdenes"
+        app:backgroundTint="@color/primary"
+        app:tint="@color/on_primary" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabCart"

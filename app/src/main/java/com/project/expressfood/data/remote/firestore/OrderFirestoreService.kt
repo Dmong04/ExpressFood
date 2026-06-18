@@ -3,6 +3,9 @@ package com.project.expressfood.data.remote.firestore
 import com.google.firebase.firestore.FirebaseFirestore
 import com.project.expressfood.data.local.entity.OrderDetailEntity
 import com.project.expressfood.data.local.entity.OrderEntity
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 class OrderFirestoreService(private val firestore: FirebaseFirestore) {
@@ -23,6 +26,7 @@ class OrderFirestoreService(private val firestore: FirebaseFirestore) {
                 "synced"     to true,
             )
             ordersCollection.document(order.orderId).set(orderData).await()
+            android.util.Log.d("OrderSync", "Order pushed: ${order.orderId}, details count: ${details.size}")
 
             details.forEach { detail ->
                 val detailData = mapOf(
@@ -33,9 +37,10 @@ class OrderFirestoreService(private val firestore: FirebaseFirestore) {
                     "rating"    to detail.rating,
                 )
                 detailsCollection.document(detail.detailId).set(detailData).await()
+                android.util.Log.d("OrderSync", "Detail pushed: ${detail.detailId}")
             }
         } catch (e: Exception) {
-            // Falla silenciosa — WorkManager reintentará
+            android.util.Log.e("OrderSync", "pushOrder failed for order ${order.orderId}", e)
         }
     }
 
@@ -77,8 +82,52 @@ class OrderFirestoreService(private val firestore: FirebaseFirestore) {
         }
     }
 
-    // ── Obtener todas las órdenes (admin) ─────────────────────────
+    // ── Listener en tiempo real — órdenes del cliente ────────────
 
+    fun watchOrdersByClient(clientId: String): Flow<List<OrderEntity>> = callbackFlow {
+        val listener = ordersCollection
+            .whereEqualTo("clientId", clientId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) { close(error); return@addSnapshotListener }
+                val orders = snapshot?.documents?.mapNotNull { doc ->
+                    OrderEntity(
+                        orderId    = doc.id,
+                        clientId   = doc.getString("clientId") ?: return@mapNotNull null,
+                        date       = doc.getLong("date") ?: 0L,
+                        time       = doc.getString("time") ?: "",
+                        status     = doc.getString("status") ?: "PENDING",
+                        totalPrice = doc.getDouble("totalPrice") ?: 0.0,
+                        synced     = true,
+                    )
+                } ?: emptyList()
+                trySend(orders)
+            }
+        awaitClose { listener.remove() }
+    }
+
+    // ── Listener en tiempo real — todas las órdenes (admin) ───────
+
+    fun watchAllOrders(): Flow<List<OrderEntity>> = callbackFlow {
+        val listener = ordersCollection
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) { close(error); return@addSnapshotListener }
+                val orders = snapshot?.documents?.mapNotNull { doc ->
+                    OrderEntity(
+                        orderId    = doc.id,
+                        clientId   = doc.getString("clientId") ?: return@mapNotNull null,
+                        date       = doc.getLong("date") ?: 0L,
+                        time       = doc.getString("time") ?: "",
+                        status     = doc.getString("status") ?: "PENDING",
+                        totalPrice = doc.getDouble("totalPrice") ?: 0.0,
+                        synced     = true,
+                    )
+                } ?: emptyList()
+                trySend(orders)
+            }
+        awaitClose { listener.remove() }
+    }
+
+    // ── Obtener todas las órdenes (admin) ─────────────────────────
     suspend fun getAllOrders(): List<OrderEntity> {
         return try {
             ordersCollection

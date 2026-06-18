@@ -11,6 +11,9 @@ class CartRepository(private val cartDao: CartDao) {
     fun getCartItems(clientId: String): Flow<List<CartItem>> =
         cartDao.getByClient(clientId).map { it.map { e -> e.toDomain() } }
 
+    fun getCartItemCount(clientId: String): Flow<Int> =
+        cartDao.getCartItemCount(clientId)
+
     suspend fun addOrUpdate(item: CartItem) =
         cartDao.upsert(item.toEntity())
 
