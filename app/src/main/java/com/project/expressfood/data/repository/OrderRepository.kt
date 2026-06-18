@@ -21,6 +21,14 @@ class OrderRepository(
     fun getAllOrders(): Flow<List<Order>> =
         orderDao.getAllOrders().map { it.map { e -> e.toDomain() } }
 
+    // ── Tiempo real desde Firestore (admin cambia → cliente ve) ───
+
+    fun watchOrdersByClient(clientId: String): Flow<List<Order>> =
+        orderFirestoreService.watchOrdersByClient(clientId).map { it.map { e -> e.toDomain() } }
+
+    fun watchAllOrders(): Flow<List<Order>> =
+        orderFirestoreService.watchAllOrders().map { it.map { e -> e.toDomain() } }
+
     fun getOrdersByStatus(status: OrderStatus): Flow<List<Order>> =
         orderDao.getOrdersByStatus(status.name).map { it.map { e -> e.toDomain() } }
 

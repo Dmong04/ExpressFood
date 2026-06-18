@@ -28,6 +28,10 @@ class MenuViewModel(
     val isOnline: StateFlow<Boolean> = networkMonitor.observe()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), true)
 
+    val cartItemCount: StateFlow<Int> = cartRepository
+        .getCartItemCount(clientId)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
+
     private val _searchQuery = MutableStateFlow("")
 
     @OptIn(ExperimentalCoroutinesApi::class)
