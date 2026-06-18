@@ -12,7 +12,16 @@
     <fragment
         android:id="@+id/clientHomeFragment"
         android:name="com.project.expressfood.ui.client.home.ClientHomeFragment"
-        android:label="Menú" />
+        android:label="Menú">
+
+        <action
+            android:id="@+id/action_clientHomeFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+
+        <action
+            android:id="@+id/action_clientHomeFragment_to_ordersFragment"
+            app:destination="@id/ordersFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/cartFragment"
@@ -26,9 +35,17 @@
             app:popUpToInclusive="false" />
     </fragment>
 
-    <action
-        android:id="@+id/action_clientHomeFragment_to_cartFragment"
-        app:destination="@id/cartFragment" />
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.project.expressfood.ui.client.orders.OrdersFragment"
+        android:label="Mis Órdenes">
+
+        <action
+            android:id="@+id/action_ordersFragment_to_clientHome"
+            app:destination="@id/clientHomeFragment"
+            app:popUpTo="@id/clientHomeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
 
 <!--    <fragment-->
 <!--        android:id="@+id/adminPanelFragment"-->
