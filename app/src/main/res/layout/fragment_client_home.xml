@@ -82,6 +82,18 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabOrders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="88dp"
+        android:src="@drawable/ic_orders"
+        android:contentDescription="Mis órdenes"
+        app:backgroundTint="@color/primary"
+        app:tint="@color/on_primary" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

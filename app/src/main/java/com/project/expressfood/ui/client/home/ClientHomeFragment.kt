@@ -56,6 +56,15 @@ class ClientHomeFragment : Fragment() {
         observeNetworkStatus()
         observeCartBadge()
         viewModel.syncMenu()
+
+        // ← aquí
+        binding.fabCart.setOnClickListener {
+            findNavController().navigate(R.id.action_clientHomeFragment_to_cartFragment)
+        }
+
+        binding.fabOrders.setOnClickListener {
+            findNavController().navigate(R.id.action_clientHomeFragment_to_ordersFragment)
+        }
     }
 
     private fun setupRecyclerView() {
