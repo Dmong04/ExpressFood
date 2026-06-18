@@ -20,6 +20,7 @@ interface ProductDao {
         SELECT * FROM products 
         WHERE LOWER(name) LIKE '%' || LOWER(:query) || '%'
         OR LOWER(ingredients) LIKE '%' || LOWER(:query) || '%'
+        OR LOWER(description) LIKE '%' || LOWER(:query) || '%'
     """)
     fun search(query: String): Flow<List<ProductEntity>>
 

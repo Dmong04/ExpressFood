@@ -18,12 +18,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.net.URL
+import java.util.UUID
 
-/**
- * Seeder de integración real — sube imágenes a Supabase y guarda en Firestore.
- * El DAO se implementa como fake inline — sin MockK, sin Room.
- * Ejecutar con dispositivo/emulador conectado.
- */
 @RunWith(AndroidJUnit4::class)
 class ProductSeederTest {
 
@@ -33,7 +29,6 @@ class ProductSeederTest {
     fun setUp() {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
 
-        // DAO fake inline — ignora escrituras, retorna Flows vacíos
         val productDao = object : com.project.expressfood.data.local.dao.ProductDao {
             override fun getActive() = flowOf(emptyList<ProductEntity>())
             override fun getAll() = flowOf(emptyList<ProductEntity>())
@@ -45,93 +40,51 @@ class ProductSeederTest {
             override suspend fun deleteById(id: String) = Unit
         }
 
-        // Servicios reales
         val firestoreService = ProductFirestoreService(FirebaseFirestore.getInstance())
-        val supabaseService = SupabaseStorageService(context)
+        val supabaseService  = SupabaseStorageService(context)
 
         repository = ProductRepository(productDao, firestoreService, supabaseService)
     }
 
-    // ─── Hamburguesa Clásica ───────────────────────────────────────────────────
+    // ─── Refresco Natural ─────────────────────────────────────────────────────
 
     @Test
-    fun seedHamburguesaClasica() {
+    fun seedRefrescoNatural() {
         runBlocking {
-            val context = InstrumentationRegistry.getInstrumentation().targetContext
+            val context   = InstrumentationRegistry.getInstrumentation().targetContext
+            val productId = UUID.randomUUID().toString()
 
             val product = Product(
-                id                   = "hamburguesa_clasica",
-                name                 = "Hamburguesa Clásica",
-                description          = "Carne 100% de res, lechuga fresca, tomate, queso cheddar y salsa especial.",
-                price                = 4500.0,
-                estimatedTimeMinutes = 15,
+                id                   = productId,
+                name                 = "Refresco Natural",
+                description          = "Bebida natural del día: tamarindo, cas o guanábana.",
+                price                = 1500.0,
+                estimatedTimeMinutes = 5,
                 imageUrl             = "",
                 available            = true,
-                category             = "hamburguesas",
+                category             = "bebidas",
                 ingredients          = listOf(
-                    "Carne de res",
-                    "Pan brioche",
-                    "Lechuga",
-                    "Tomate",
-                    "Queso cheddar",
-                    "Salsa especial",
+                    "Fruta natural",
+                    "Agua",
+                    "Azúcar",
                 ),
-                rating = 4.5,
+                rating = 4.4,
             )
 
-            val imageUrl = "https://www.saborusa.com/wp-content/uploads/2019/10/67.-Hamburguesa-de-carne.png"
-            val imageUri = downloadImage(context.cacheDir, imageUrl, "hamburguesa_clasica.jpg")
-
-            println("Subiendo Hamburguesa Clásica...")
-            val result = repository.createProduct(product = product, imageUri = imageUri)
-
-            println("Resultado: $result")
-            result.exceptionOrNull()?.printStackTrace()
-            assertTrue("Hamburguesa Clásica debe crearse exitosamente", result.isSuccess)
-            println("Producto creado con ID: ${result.getOrNull()}")
-
-            File(context.cacheDir, "hamburguesa_clasica.jpg").delete()
-        }
-    }
-
-    // ─── Hamburguesa BBQ ──────────────────────────────────────────────────────
-
-    @Test
-    fun seedHamburguesaBBQ() {
-        runBlocking {
-            val context = InstrumentationRegistry.getInstrumentation().targetContext
-
-            val product = Product(
-                id                   = "hamburguesa_bbq",
-                name                 = "Hamburguesa BBQ",
-                description          = "Carne de res con salsa BBQ ahumada, cebolla caramelizada y tocino crujiente.",
-                price                = 5200.0,
-                estimatedTimeMinutes = 18,
-                imageUrl             = "",
-                available            = true,
-                category             = "hamburguesas",
-                ingredients          = listOf(
-                    "Carne de res",
-                    "Salsa BBQ",
-                    "Cebolla caramelizada",
-                    "Tocino",
-                    "Pan brioche",
-                ),
-                rating = 4.7,
+            val imageUri = downloadImage(
+                context.cacheDir,
+                "https://www.muydelish.com/wp-content/uploads/2022/05/agua-de-tamarindo-drink.jpg",
+                "$productId.jpg",
             )
 
-            val imageUrl = "https://bsstatic2.mrjack.es/wp-content/uploads/2020/09/hamburguesa-bbq-cab.jpg"
-            val imageUri = downloadImage(context.cacheDir, imageUrl, "hamburguesa_bbq.jpg")
-
-            println("Subiendo Hamburguesa BBQ...")
+            println("Subiendo Refresco Natural con ID: $productId")
             val result = repository.createProduct(product = product, imageUri = imageUri)
 
-            println("Resultado: $result")
             result.exceptionOrNull()?.printStackTrace()
-            assertTrue("Hamburguesa BBQ debe crearse exitosamente", result.isSuccess)
+            assertTrue("Refresco Natural debe crearse exitosamente", result.isSuccess)
             println("Producto creado con ID: ${result.getOrNull()}")
 
-            File(context.cacheDir, "hamburguesa_bbq.jpg").delete()
+            File(context.cacheDir, "$productId.jpg").delete()
         }
     }
 
