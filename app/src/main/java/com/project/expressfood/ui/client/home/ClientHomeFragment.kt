@@ -11,12 +11,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.snackbar.Snackbar
 import com.project.expressfood.ExpressFoodApp
+import com.project.expressfood.R
 import com.project.expressfood.databinding.FragmentClientHomeBinding
 import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
-import com.project.expressfood.R
 
 class ClientHomeFragment : Fragment() {
 
@@ -35,24 +37,25 @@ class ClientHomeFragment : Fragment() {
     }
 
     private lateinit var adapter: ProductAdapter
+    private var cartBadge: BadgeDrawable? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentClientHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    @androidx.annotation.OptIn(com.google.android.material.badge.ExperimentalBadgeUtils::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         setupSearch()
+        setupCartFab()
+        setupReportsButton()
         observeProducts()
         observeCartEvents()
         observeNetworkStatus()
+        observeCartBadge()
         viewModel.syncMenu()
-
-        binding.fabCart.setOnClickListener {
-            findNavController().navigate(R.id.action_clientHomeFragment_to_cartFragment)
-        }
     }
 
     private fun setupRecyclerView() {
@@ -64,6 +67,30 @@ class ClientHomeFragment : Fragment() {
     private fun setupSearch() {
         binding.etSearch.addTextChangedListener { text ->
             viewModel.onSearch(text?.toString() ?: "")
+        }
+    }
+
+    @androidx.annotation.OptIn(com.google.android.material.badge.ExperimentalBadgeUtils::class)
+    private fun setupCartFab() {
+        cartBadge = BadgeDrawable.create(requireContext()).apply {
+            badgeGravity = BadgeDrawable.TOP_END
+            isVisible = false
+        }
+        binding.fabCart.post {
+            BadgeUtils.attachBadgeDrawable(cartBadge!!, binding.fabCart)
+        }
+        binding.fabCart.setOnClickListener {
+            findNavController().navigate(R.id.action_clientHomeFragment_to_cartFragment)
+        }
+    }
+
+    private fun setupReportsButton() {
+        binding.toolbar.inflateMenu(R.menu.menu_client_home)
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.action_reports) {
+                findNavController().navigate(R.id.action_clientHomeFragment_to_reportFragment)
+                true
+            } else false
         }
     }
 
@@ -95,8 +122,24 @@ class ClientHomeFragment : Fragment() {
         }
     }
 
+    private fun observeCartBadge() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.cartItemCount.collect { count ->
+                    cartBadge?.apply {
+                        isVisible = count > 0
+                        if (count > 0) number = count
+                    }
+                }
+            }
+        }
+    }
+
+    @androidx.annotation.OptIn(com.google.android.material.badge.ExperimentalBadgeUtils::class)
     override fun onDestroyView() {
         super.onDestroyView()
+        cartBadge?.let { BadgeUtils.detachBadgeDrawable(it, binding.fabCart) }
+        cartBadge = null
         _binding = null
     }
 }

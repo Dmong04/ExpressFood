@@ -30,6 +30,15 @@
         android:id="@+id/action_clientHomeFragment_to_cartFragment"
         app:destination="@id/cartFragment" />
 
+    <action
+        android:id="@+id/action_clientHomeFragment_to_reportFragment"
+        app:destination="@id/reportFragment" />
+
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.project.expressfood.ui.client.report.ReportFragment"
+        android:label="Mis Reportes" />
+
 <!--    <fragment-->
 <!--        android:id="@+id/adminPanelFragment"-->
 <!--        android:name="com.project.expressfood.ui.admin.AdminPanelFragment"-->

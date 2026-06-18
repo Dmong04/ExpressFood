@@ -3,6 +3,9 @@ package com.project.expressfood.data.remote.firestore
 import com.google.firebase.firestore.FirebaseFirestore
 import com.project.expressfood.data.local.entity.OrderDetailEntity
 import com.project.expressfood.data.local.entity.OrderEntity
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 class OrderFirestoreService(private val firestore: FirebaseFirestore) {
@@ -77,6 +80,51 @@ class OrderFirestoreService(private val firestore: FirebaseFirestore) {
         } catch (e: Exception) {
             emptyList()
         }
+    }
+
+    // ── Listener en tiempo real — órdenes del cliente ────────────
+
+    fun watchOrdersByClient(clientId: String): Flow<List<OrderEntity>> = callbackFlow {
+        val listener = ordersCollection
+            .whereEqualTo("clientId", clientId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) { close(error); return@addSnapshotListener }
+                val orders = snapshot?.documents?.mapNotNull { doc ->
+                    OrderEntity(
+                        orderId    = doc.id,
+                        clientId   = doc.getString("clientId") ?: return@mapNotNull null,
+                        date       = doc.getLong("date") ?: 0L,
+                        time       = doc.getString("time") ?: "",
+                        status     = doc.getString("status") ?: "PENDING",
+                        totalPrice = doc.getDouble("totalPrice") ?: 0.0,
+                        synced     = true,
+                    )
+                } ?: emptyList()
+                trySend(orders)
+            }
+        awaitClose { listener.remove() }
+    }
+
+    // ── Listener en tiempo real — todas las órdenes (admin) ───────
+
+    fun watchAllOrders(): Flow<List<OrderEntity>> = callbackFlow {
+        val listener = ordersCollection
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) { close(error); return@addSnapshotListener }
+                val orders = snapshot?.documents?.mapNotNull { doc ->
+                    OrderEntity(
+                        orderId    = doc.id,
+                        clientId   = doc.getString("clientId") ?: return@mapNotNull null,
+                        date       = doc.getLong("date") ?: 0L,
+                        time       = doc.getString("time") ?: "",
+                        status     = doc.getString("status") ?: "PENDING",
+                        totalPrice = doc.getDouble("totalPrice") ?: 0.0,
+                        synced     = true,
+                    )
+                } ?: emptyList()
+                trySend(orders)
+            }
+        awaitClose { listener.remove() }
     }
 
     // ── Obtener todas las órdenes (admin) ─────────────────────────
