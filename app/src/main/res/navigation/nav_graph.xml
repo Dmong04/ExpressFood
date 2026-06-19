@@ -56,6 +56,11 @@
         android:name="com.project.expressfood.ui.client.report.ReportFragment"
         android:label="Mis Reportes" />
 
+    <fragment
+        android:id="@+id/adminOrdersFragment"
+        android:name="com.project.expressfood.ui.admin.AdminOrdersFragment"
+        android:label="Gestión de Pedidos" />
+
 <!--    <fragment-->
 <!--        android:id="@+id/adminPanelFragment"-->
 <!--        android:name="com.project.expressfood.ui.admin.AdminPanelFragment"-->

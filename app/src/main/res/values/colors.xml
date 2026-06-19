@@ -27,4 +27,20 @@
     <color name="hero_gradient_end">#C8E6C9</color>
     <color name="green_light">#C8E6C9</color>
     <color name="amber_light">#FFF8E1</color>
+
+        <!-- Estados de Pedido -->
+    <color name="status_pending_bg">#FFF3E0</color>   <!-- Naranja muy claro -->
+    <color name="status_pending_text">#E65100</color> <!-- Naranja oscuro -->
+
+    <color name="status_preparing_bg">#E3F2FD</color> <!-- Azul claro -->
+    <color name="status_preparing_text">#1565C0</color><!-- Azul oscuro -->
+
+    <color name="status_ready_bg">#E8F5E9</color>     <!-- Verde claro -->
+    <color name="status_ready_text">#2E7D32</color>   <!-- Verde oscuro -->
+
+    <color name="status_delivered_bg">#2E7D32</color> <!-- Verde oscuro (Fondo) -->
+    <color name="status_delivered_text">#2FFFFFF</color>
+
+    <color name="status_cancelled_bg">#FFEBEE</color> <!-- Rojo claro -->
+    <color name="status_cancelled_text">#C62828</color><!-- Rojo oscuro -->
 </resources>
