@@ -17,7 +17,11 @@ class OrdersFragment : Fragment() {
     private val viewModel: OrdersViewModel by viewModels {
         val app = requireActivity().application as ExpressFoodApp
         val clientId = app.container.authRepository.currentUser?.uid ?: ""
-        OrdersViewModelFactory(app.container.orderRepository, clientId)
+        OrdersViewModelFactory(
+            app.container.orderRepository,
+            app.container.productRepository,
+            clientId
+        )
     }
 
     private lateinit var adapter: OrdersAdapter
@@ -34,8 +38,8 @@ class OrdersFragment : Fragment() {
         binding.rvOrders.layoutManager =
             androidx.recyclerview.widget.LinearLayoutManager(requireContext())
 
-        viewModel.orders.observe(viewLifecycleOwner) { orders ->
-            adapter.submitList(orders)
+        viewModel.ordersState.observe(viewLifecycleOwner) { uiOrders ->
+            adapter.submitList(uiOrders)
         }
 
         binding.toolbar.setNavigationOnClickListener {

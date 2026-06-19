@@ -33,9 +33,9 @@ class OrderRepository(
         orderDao.getOrdersByStatus(status.name).map { it.map { e -> e.toDomain() } }
 
     suspend fun getOrderWithDetails(orderId: String): Order? {
-        val entity  = orderDao.getOrdersByClient("") // ver nota abajo *
+        val entity  = orderDao.getById(orderId) ?: return null
         val details = orderDao.getDetailsByOrder(orderId).map { it.toDomain() }
-        return null // placeholder — se completa cuando exista getById en OrderDao
+        return entity.toDomain().copy(details = details)
     }
 
     // ── Guardar orden (offline-first) ─────────────────────────────
