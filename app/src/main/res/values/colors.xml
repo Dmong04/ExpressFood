@@ -25,4 +25,7 @@
     <color name="error_container">#FDECEA</color>
     <color name="hero_gradient_start">#E8F5E9</color>
     <color name="hero_gradient_end">#C8E6C9</color>
+    <color name="white">#FFFFFF</color>
+    <color name="outline_light">#E0E0E0</color>
+    <color name="background_smoke">#F5F5F5</color>
 </resources>
