@@ -51,19 +51,19 @@
     <color name="amber_light">#FFF8E1</color>
 
     <!-- Estados de Pedido -->
-    <color name="status_pending_bg">#FFF3E0</color>
-    <color name="status_pending_text">#E65100</color>
+    <color name="status_pending_bg">#f5c127</color>
+    <color name="status_pending_text">#000000</color>
 
     <color name="status_preparing_bg">#E3F2FD</color>
     <color name="status_preparing_text">#1565C0</color>
 
-    <color name="status_ready_bg">#E8F5E9</color>
-    <color name="status_ready_text">#2E7D32</color>
+    <color name="status_ready_bg">#1866cc</color>
+    <color name="status_ready_text">#FFFFFF</color>
 
-    <color name="status_delivered_bg">#2E7D32</color>
+    <color name="status_delivered_bg">#2d7d34</color>
     <color name="status_delivered_text">#FFFFFF</color>
 
-    <color name="status_cancelled_bg">#FFEBEE</color>
-    <color name="status_cancelled_text">#C62828</color>
+    <color name="status_cancelled_bg">#C62828</color>
+    <color name="status_cancelled_text">#000000</color>
 
 </resources>

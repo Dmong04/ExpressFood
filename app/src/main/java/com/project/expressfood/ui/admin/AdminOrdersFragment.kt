@@ -24,7 +24,11 @@ class AdminOrdersFragment : Fragment() {
 
     private val viewModel: AdminOrdersViewModel by viewModels {
         val container = (requireActivity().application as ExpressFoodApp).container
-        AdminOrdersViewModel.Factory(container.orderRepository, container.userFirestoreService)
+        AdminOrdersViewModel.Factory(
+            container.orderRepository,
+            container.productRepository,
+            container.userFirestoreService
+        )
     }
 
     private lateinit var adapter: AdminOrdersAdapter
