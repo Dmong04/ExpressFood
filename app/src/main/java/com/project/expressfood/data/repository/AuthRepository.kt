@@ -22,6 +22,8 @@ class AuthRepository(
                 val nameParts = firebaseUser.displayName.orEmpty().trim().split(" ", limit = 2)
                 User(
                     uid          = firebaseUser.uid,
+                    email        = firebaseUser.email ?: "",
+                    displayName  = firebaseUser.displayName ?: "",
                     firstName    = nameParts.getOrElse(0) { "" },
                     lastName     = nameParts.getOrElse(1) { "" },
                     phone        = firebaseUser.phoneNumber ?: "",
