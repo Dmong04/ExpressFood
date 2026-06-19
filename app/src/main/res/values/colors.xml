@@ -39,7 +39,7 @@
     <color name="status_ready_text">#2E7D32</color>   <!-- Verde oscuro -->
 
     <color name="status_delivered_bg">#2E7D32</color> <!-- Verde oscuro (Fondo) -->
-    <color name="status_delivered_text">#2FFFFFF</color>
+    <color name="status_delivered_text">#FFFFFF</color>
 
     <color name="status_cancelled_bg">#FFEBEE</color> <!-- Rojo claro -->
     <color name="status_cancelled_text">#C62828</color><!-- Rojo oscuro -->
