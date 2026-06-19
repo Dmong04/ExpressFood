@@ -1,46 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!-- Material Theme -->
     <color name="primary">#2E7D32</color>
     <color name="on_primary">#FFFFFF</color>
+
     <color name="primary_container">#B9F6CA</color>
     <color name="on_primary_container">#002106</color>
+
     <color name="secondary">#558B2F</color>
     <color name="on_secondary">#FFFFFF</color>
+
     <color name="secondary_container">#DCEDC8</color>
     <color name="on_secondary_container">#1B2E00</color>
+
     <color name="tertiary">#E65100</color>
     <color name="on_tertiary">#FFFFFF</color>
+
     <color name="tertiary_container">#FFE0B2</color>
     <color name="on_tertiary_container">#3E1600</color>
+
+    <!-- Surface & Background -->
     <color name="surface">#FAFAFA</color>
     <color name="on_surface">#1C1B1F</color>
+
     <color name="surface_variant">#F1F8E9</color>
     <color name="on_surface_variant">#49454F</color>
-    <color name="outline">#79747E</color>
-    <color name="outline_variant">#E0E0E0</color>
+
     <color name="background">#FAFAFA</color>
     <color name="on_background">#1C1B1F</color>
+
+    <!-- Borders -->
+    <color name="outline">#79747E</color>
+    <color name="outline_variant">#E0E0E0</color>
+    <color name="outline_light">#E0E0E0</color>
+
+    <!-- Error -->
     <color name="error">#B00020</color>
     <color name="on_error">#FFFFFF</color>
     <color name="error_container">#FDECEA</color>
+
+    <!-- Hero Section -->
     <color name="hero_gradient_start">#E8F5E9</color>
     <color name="hero_gradient_end">#C8E6C9</color>
+
+    <!-- Utility Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="background_smoke">#F5F5F5</color>
     <color name="green_light">#C8E6C9</color>
     <color name="amber_light">#FFF8E1</color>
 
-        <!-- Estados de Pedido -->
-    <color name="status_pending_bg">#FFF3E0</color>   <!-- Naranja muy claro -->
-    <color name="status_pending_text">#E65100</color> <!-- Naranja oscuro -->
+    <!-- Estados de Pedido -->
+    <color name="status_pending_bg">#FFF3E0</color>
+    <color name="status_pending_text">#E65100</color>
 
-    <color name="status_preparing_bg">#E3F2FD</color> <!-- Azul claro -->
-    <color name="status_preparing_text">#1565C0</color><!-- Azul oscuro -->
+    <color name="status_preparing_bg">#E3F2FD</color>
+    <color name="status_preparing_text">#1565C0</color>
 
-    <color name="status_ready_bg">#E8F5E9</color>     <!-- Verde claro -->
-    <color name="status_ready_text">#2E7D32</color>   <!-- Verde oscuro -->
+    <color name="status_ready_bg">#E8F5E9</color>
+    <color name="status_ready_text">#2E7D32</color>
 
-    <color name="status_delivered_bg">#2E7D32</color> <!-- Verde oscuro (Fondo) -->
+    <color name="status_delivered_bg">#2E7D32</color>
     <color name="status_delivered_text">#FFFFFF</color>
 
-    <color name="status_cancelled_bg">#FFEBEE</color> <!-- Rojo claro -->
-    <color name="status_cancelled_text">#C62828</color><!-- Rojo oscuro -->
+    <color name="status_cancelled_bg">#FFEBEE</color>
+    <color name="status_cancelled_text">#C62828</color>
+
 </resources>
