@@ -79,7 +79,7 @@ class LoginFragment : Fragment() {
     private fun handleAuthState(state: AuthState) {
         when (state) {
             is AuthState.Authenticated -> {
-                navigateToHome()
+                navigateToHome(state.user.role)
             }
             is AuthState.Error -> {
                 Toast.makeText(requireContext(), state.message, Toast.LENGTH_LONG).show()
@@ -93,8 +93,14 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun navigateToHome() {
-        findNavController().navigate(R.id.clientHomeFragment, null, 
+    private fun navigateToHome(role: UserRole) {
+        val destination = if (role == UserRole.ADMIN) {
+            R.id.adminOrdersFragment
+        } else {
+            R.id.clientHomeFragment
+        }
+
+        findNavController().navigate(destination, null,
             androidx.navigation.NavOptions.Builder()
                 .setPopUpTo(R.id.loginFragment, true)
                 .build()
