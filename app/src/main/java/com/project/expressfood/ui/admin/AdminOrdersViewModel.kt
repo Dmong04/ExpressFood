@@ -8,6 +8,8 @@ import com.project.expressfood.data.repository.ProductRepository
 import com.project.expressfood.domain.model.Order
 import com.project.expressfood.domain.model.OrderStatus
 import com.project.expressfood.data.remote.firestore.UserFirestoreService
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -66,21 +68,23 @@ class AdminOrdersViewModel(
                 filtered.sortedByDescending { it.date }
             }.collect { filteredOrders ->
                 val ordersWithClient = filteredOrders.map { order ->
-                    val name = getClientName(order.clientId)
-                    
-                    // Fetch full order with details if not present
-                    val fullOrder = orderRepository.getOrderWithDetails(order.orderId) ?: order
-                    
-                    val itemsSummary = fullOrder.details.map { detail ->
-                        OrderDetailUiModel(
-                            productName = getProductName(detail.itemId),
-                            quantity = detail.quantity,
-                            price = detail.itemPrice
-                        )
+                    async {
+                        val name = getClientName(order.clientId)
+                        
+
+                        val fullOrder = orderRepository.getOrderWithDetails(order.orderId) ?: order
+                        
+                        val itemsSummary = fullOrder.details.map { detail ->
+                            OrderDetailUiModel(
+                                productName = getProductName(detail.itemId),
+                                quantity = detail.quantity,
+                                price = detail.itemPrice
+                            )
+                        }
+                        
+                        OrderWithClient(fullOrder, name, itemsSummary)
                     }
-                    
-                    OrderWithClient(fullOrder, name, itemsSummary)
-                }
+                }.awaitAll()
                 _ordersState.value = ordersWithClient
             }
         }

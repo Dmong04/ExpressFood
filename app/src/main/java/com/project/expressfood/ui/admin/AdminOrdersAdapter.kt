@@ -37,20 +37,20 @@ class AdminOrdersAdapter(
             binding.tvClientName.text = item.clientName
             binding.tvTotal.text = "₡${String.format(Locale.getDefault(), "%,.2f", order.totalPrice)}"
             
-            // Format Date
+
             val sdf = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
             val dateStr = sdf.format(Date(order.date))
             binding.tvDateTime.text = "$dateStr - ${order.time}"
 
-            // Status UI
+
             binding.tvStatus.text = translateStatus(order.status)
             binding.tvStatus.setBackgroundResource(getStatusBackground(order.status))
 
-            // Expand/Collapse logic
+
             binding.layoutDetails.visibility = if (isExpanded) android.view.View.VISIBLE else android.view.View.GONE
             binding.ivArrow.rotation = if (isExpanded) 180f else 0f
 
-            // Populate items if expanded
+
             if (isExpanded) {
                 binding.containerOrderItems.removeAllViews()
                 item.itemsSummary.forEach { detailUi ->
@@ -65,7 +65,7 @@ class AdminOrdersAdapter(
                 }
                 
                 if (item.itemsSummary.isEmpty()) {
-                    // Fallback for empty details
+
                     val emptyBinding = ItemOrderDetailSubitemBinding.inflate(
                         LayoutInflater.from(binding.root.context),
                         binding.containerOrderItems,
