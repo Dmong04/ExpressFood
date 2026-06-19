@@ -20,7 +20,6 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         observeAuthState()
     }
 
-    /** Escucha cambios en Firebase Auth y actualiza el StateFlow. */
     private fun observeAuthState() {
         viewModelScope.launch {
             authRepository.authState.collect { firebaseUser ->
@@ -53,8 +52,6 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
             _loginError.value  = null
             try {
                 authRepository.signInWithGoogle(context)
-                // No necesitas hacer nada aquí:
-                // observeAuthState() detecta el cambio de Firebase y emite AuthState.Authenticated
             } catch (e: Exception) {
                 _loginError.value = e.message ?: "Error al iniciar sesión"
             } finally {
@@ -65,7 +62,6 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     fun clearLoginError() { _loginError.value = null }
 
-    /** Factory para inyección manual de dependencias (sin Hilt). */
     class Factory(private val authRepository: AuthRepository) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T =

@@ -3,7 +3,6 @@ package com.project.expressfood.ui.admin
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.project.expressfood.data.repository.AuthRepository
 import com.project.expressfood.data.repository.OrderRepository
 import com.project.expressfood.domain.model.Order
 import com.project.expressfood.domain.model.OrderStatus
@@ -11,7 +10,7 @@ import com.project.expressfood.data.remote.firestore.UserFirestoreService
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 data class OrderWithClient(
@@ -24,6 +23,9 @@ class AdminOrdersViewModel(
     private val userFirestoreService: UserFirestoreService
 ) : ViewModel() {
 
+    private val _allOrders = MutableStateFlow<List<Order>>(emptyList())
+    private val _currentFilter = MutableStateFlow<OrderStatus?>(null)
+
     private val _ordersState = MutableStateFlow<List<OrderWithClient>>(emptyList())
     val ordersState: StateFlow<List<OrderWithClient>> = _ordersState.asStateFlow()
 
@@ -34,18 +36,30 @@ class AdminOrdersViewModel(
 
     init {
         observeOrders()
+        setupFiltering()
     }
 
     private fun observeOrders() {
         viewModelScope.launch {
             _isLoading.value = true
-            orderRepository.watchAllOrders().collectLatest { orders ->
-                val ordersWithClient = orders.map { order ->
+            orderRepository.watchAllOrders().collect { orders ->
+                _allOrders.value = orders
+                _isLoading.value = false
+            }
+        }
+    }
+
+    private fun setupFiltering() {
+        viewModelScope.launch {
+            combine(_allOrders, _currentFilter) { orders, filter ->
+                val filtered = if (filter == null) orders else orders.filter { it.status == filter }
+                filtered.sortedByDescending { it.date } // Ordenar por fecha más reciente
+            }.collect { filteredOrders ->
+                val ordersWithClient = filteredOrders.map { order ->
                     val name = getClientName(order.clientId)
                     OrderWithClient(order, name)
                 }
                 _ordersState.value = ordersWithClient
-                _isLoading.value = false
             }
         }
     }
@@ -61,6 +75,10 @@ class AdminOrdersViewModel(
             clientNamesCache[clientId] = finalName
             finalName
         }
+    }
+
+    fun filterByStatus(status: OrderStatus?) {
+        _currentFilter.value = status
     }
 
     fun updateOrderStatus(orderId: String, newStatus: OrderStatus) {

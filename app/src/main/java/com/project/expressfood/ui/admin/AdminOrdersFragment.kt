@@ -41,7 +41,22 @@ class AdminOrdersFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        setupFilters()
         observeViewModel()
+    }
+
+    private fun setupFilters() {
+        binding.chipGroupFilter.setOnCheckedStateChangeListener { _, checkedIds ->
+            val status = when (checkedIds.firstOrNull()) {
+                binding.chipPending.id -> OrderStatus.PENDING
+                binding.chipPreparing.id -> OrderStatus.PREPARING
+                binding.chipReady.id -> OrderStatus.READY
+                binding.chipDelivered.id -> OrderStatus.DELIVERED
+                binding.chipCancelled.id -> OrderStatus.CANCELLED
+                else -> null // chipAll
+            }
+            viewModel.filterByStatus(status)
+        }
     }
 
     private fun setupRecyclerView() {
