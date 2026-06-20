@@ -23,9 +23,9 @@ android {
         // Usamos gradleLocalProperties que es más amigable con Gradle Kotlin DSL
         val localProps = gradleLocalProperties(rootDir, providers)
 
-        buildConfigField("String", "WEB_CLIENT_ID", "\"${localProps["WEB_CLIENT_ID"] ?: ""}\"")
-        buildConfigField("String", "SUPABASE_URL", "\"${localProps["SUPABASE_URL"] ?: ""}\"")
-        buildConfigField("String", "SUPABASE_SERVICE_KEY", "\"${localProps["SUPABASE_SERVICE_KEY"] ?: ""}\"")
+        buildConfigField("String", "WEB_CLIENT_ID", "\"${System.getenv("WEB_CLIENT_ID") ?: localProps["WEB_CLIENT_ID"] ?: ""}\"")
+        buildConfigField("String", "SUPABASE_URL", "\"${System.getenv("SUPABASE_URL") ?: localProps["SUPABASE_URL"] ?: ""}\"")
+        buildConfigField("String", "SUPABASE_SERVICE_KEY", "\"${System.getenv("SUPABASE_SERVICE_KEY") ?: localProps["SUPABASE_SERVICE_KEY"] ?: ""}\"")
     }
 
     // ---- NUEVO: bloque de firma ----
