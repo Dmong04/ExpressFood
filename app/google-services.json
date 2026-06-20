@@ -38,6 +38,14 @@
           }
         },
         {
+          "client_id": "37782324999-h4d745dofqfvcqigpsk3io6vdgpu7jf9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.expressfood",
+            "certificate_hash": "3447fa9627d457c650532cdc79350e895366fb04"
+          }
+        },
+        {
           "client_id": "37782324999-o52njsf1dnaqntj69ehjrei3bk1iu7vd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
