@@ -1,11 +1,97 @@
 # 🍔 ExpressFood
-
-> Aplicación móvil Android con autenticación de Google mediante Firebase.  
-> Esta guía cubre la generación e integración de las huellas digitales SHA-1 necesarias para activar el inicio de sesión con Google.
+> Aplicación móvil Android para pedidos de comida, con doble interfaz para **Clientes** y **Administradores**, arquitectura offline-first y autenticación con Google mediante Firebase.
 
 ![Android](https://img.shields.io/badge/Android_Studio-3DDC84?style=flat&logo=android-studio&logoColor=white)
+![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?style=flat&logo=kotlin&logoColor=white)
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=flat&logo=firebase&logoColor=black)
 ![Google Auth](https://img.shields.io/badge/Google_Sign--In-4285F4?style=flat&logo=google&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3FCF8E?style=flat&logo=supabase&logoColor=white)
+
+---
+
+## 📖 Descripción general
+
+ExpressFood es una app Android orientada a la gestión de pedidos de comida. Soporta dos roles de usuario:
+
+- **Clientes:** navegan el menú, realizan pedidos y consultan reportes de gasto.
+- **Administradores:** gestionan el cumplimiento de pedidos y el inventario.
+
+La aplicación sigue una filosofía **offline-first**: el usuario puede ver el menú y su historial incluso sin conexión activa a internet, gracias a la persistencia local con Room y sincronización en segundo plano.
+
+### ✨ Características principales
+
+- 🔐 **Autenticación con Google:** inicio de sesión seguro usando Firebase Auth y Credential Manager.
+- 📡 **Arquitectura offline-first:** persistencia local con Room y sincronización en background.
+- ⚡ **Actualizaciones en tiempo real:** seguimiento de pedidos en vivo mediante snapshots de Firestore.
+- 🧭 **Acceso basado en roles:** enrutamiento automático al dashboard de Cliente o Admin según el perfil del usuario.
+- 📊 **Analítica de gasto:** reportes mensuales y diarios para que los clientes controlen sus gastos en comida.
+
+---
+
+## 🛠️ Stack tecnológico
+
+| Capa                       | Tecnologías                                                  |
+| --------------------------- | ------------------------------------------------------------- |
+| **Lenguaje**                | Kotlin (Coroutines, Flow)                                     |
+| **Framework de UI**         | ViewBinding (Fragments/XML) y Jetpack Compose (Theming)       |
+| **Base de datos local**     | Room (SQLite)                                                 |
+| **Base de datos remota**    | Firebase Firestore                                            |
+| **Almacenamiento**          | Supabase Storage (imágenes de productos)                      |
+| **Autenticación**           | Firebase Auth + Google Sign-In (Credential Manager)            |
+| **Inyección de dependencias** | Manual, mediante `AppContainer`                              |
+| **Tareas en segundo plano** | WorkManager (sincronización periódica)                        |
+
+---
+
+## 🏗️ Arquitectura del sistema
+
+El proyecto sigue el patrón **MVVM (Model-View-ViewModel)** combinado con una capa de **Repository** que abstrae las fuentes de datos. La clase `AppContainer` actúa como el contenedor central de inyección de dependencias, proveyendo instancias singleton de repositorios y servicios a los ViewModels.
+
+### Decisiones arquitectónicas clave
+
+**1. Inyección de dependencias manual**
+En lugar de usar frameworks como Hilt o Koin, el proyecto implementa un patrón de DI manual a través de `AppContainer`, inicializado en la clase `ExpressFoodApp` y que mantiene el ciclo de vida de la lógica principal de la app.
+
+**2. Sincronización en segundo plano**
+La app usa `WorkManager` para mantener la consistencia de los datos. Un `SyncOrdersWorker` se ejecuta periódicamente (cada hora) para enviar a Firestore los pedidos realizados sin conexión.
+
+**3. Estrategia de almacenamiento híbrida**
+ExpressFood distribuye sus datos entre tres proveedores:
+
+- **Room:** caché local para productos, pedidos y el carrito de compras activo.
+- **Firestore:** fuente de verdad principal para perfiles de usuario y estado de los pedidos.
+- **Supabase:** almacenamiento de imágenes de productos del menú, optimizado para alto rendimiento.
+
+---
+
+## 📱 Capturas de pantalla
+
+| Login | Menú principal | Búsqueda |
+| :---: | :---: | :---: |
+| ![Login con Google](screenshots/login.jpg) | ![Menú de productos](screenshots/menu.jpg) | ![Búsqueda de platillos](screenshots/busqueda.jpg) |
+
+| Carrito y checkout | Historial de pedidos |
+| :---: | :---: |
+| ![Carrito y checkout](screenshots/carrito.jpg) | ![Historial de pedidos](screenshots/historial.jpg) |
+
+> Las imágenes se encuentran en la carpeta [`screenshots/`](screenshots/) del repositorio.
+
+---
+
+## 📚 Documentación ampliada
+
+Para más detalle sobre cada módulo del proyecto, consulta la wiki generada (DeepWiki):
+
+- [Getting Started & Build Configuration](https://deepwiki.com/Dmong04/ExpressFood/1.1-getting-started-and-build-configuration)
+- [Application Entry Point & Dependency Injection](https://deepwiki.com/Dmong04/ExpressFood/1.2-application-entry-point-and-dependency-injection)
+- [Architecture & Data Layer](https://deepwiki.com/Dmong04/ExpressFood/2-architecture-and-data-layer)
+- [Authentication](https://deepwiki.com/Dmong04/ExpressFood/3-authentication)
+- [Client-Facing UI](https://deepwiki.com/Dmong04/ExpressFood/4-client-facing-ui)
+- [Admin UI](https://deepwiki.com/Dmong04/ExpressFood/5-admin-ui)
+- [UI Design System & Resources](https://deepwiki.com/Dmong04/ExpressFood/6-ui-design-system-and-resources)
+- [Firebase & Backend Configuration](https://deepwiki.com/Dmong04/ExpressFood/7-firebase-and-backend-configuration)
+- [Testing](https://deepwiki.com/Dmong04/ExpressFood/8-testing)
+- [Glossary](https://deepwiki.com/Dmong04/ExpressFood/9-glossary)
 
 ---
 
@@ -34,7 +120,7 @@ keytool -genkey -v `
   -dname "CN=Android Debug, O=Android, C=US"
 ```
 
-> **Nota:** Este comando genera un par de claves RSA de 2048 bits con una validez de 10 000 días.  
+> **Nota:** Este comando genera un par de claves RSA de 2048 bits con una validez de 10 000 días.
 > Si el archivo `debug.keystore` ya existe, puedes omitir este paso.
 
 ---
@@ -52,7 +138,7 @@ keytool -list -v `
 - **Contraseña del keystore:** `android`
 - Copia el valor que aparece en la línea **`SHA1:`** del output.
 
-> ⚠️ **Importante:** El SHA-1 del keystore de **debug** es solo para desarrollo local.  
+> ⚠️ **Importante:** El SHA-1 del keystore de **debug** es solo para desarrollo local.
 > Para publicar en Google Play Store necesitarás el SHA-1 de tu keystore de **release**.
 
 ---
@@ -92,10 +178,28 @@ ExpressFood/
 │   ├── google-services.json     ← configuración de Firebase
 │   └── src/
 │       └── main/
-│           └── java/...         ← código fuente
-├── build.gradle
-└── settings.gradle
+│           └── java/
+│               └── com/project/expressfood/
+│                   ├── data/            ← repositorios, Room, Firestore, Supabase, WorkManager
+│                   ├── ui/               ← pantallas de Cliente y Admin, theming
+│                   └── ExpressFoodApp.kt ← punto de entrada y AppContainer (DI)
+├── build.gradle.kts
+└── settings.gradle.kts
 ```
+
+---
+
+## 📱 Capturas de pantalla
+
+| Inicio de sesión | Menú principal | Búsqueda de platillos |
+| :---: | :---: | :---: |
+| <img src="screenshots/login.jpg" width="220"/> | <img src="screenshots/menu.jpg" width="220"/> | <img src="screenshots/search.jpg" width="220"/> |
+| Pantalla de bienvenida con inicio de sesión mediante Google. | Listado del menú con platillos, precios y calificaciones. | Búsqueda de platillos por nombre o ingrediente. |
+
+| Carrito de compras | Historial de pedidos | |
+| :---: | :---: | :---: |
+| <img src="screenshots/cart.jpg" width="220"/> | <img src="screenshots/orders-history.jpg" width="220"/> | |
+| Resumen de la orden con subtotal, impuestos (13% IVA) y total. | Historial de pedidos con fecha, estado y monto. | |
 
 ---
 
@@ -104,3 +208,4 @@ ExpressFood/
 - [Firebase Authentication — Google Sign-In](https://firebase.google.com/docs/auth/android/google-signin)
 - [Obtener huellas digitales SHA — Documentación Android](https://developers.google.com/android/guides/client-auth)
 - [Firebase Console](https://console.firebase.google.com/)
+- [DeepWiki — ExpressFood Project Overview](https://deepwiki.com/Dmong04/ExpressFood/1-expressfood-project-overview)
