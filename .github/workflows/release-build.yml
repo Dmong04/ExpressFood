@@ -12,6 +12,8 @@ jobs:
   build:
     name: Build APK firmado
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout del código
@@ -61,3 +63,10 @@ jobs:
           name: app-release-apk
           path: app/build/outputs/apk/release/*.apk
           retention-days: 30
+
+      - name: Crear GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: app/build/outputs/apk/release/*.apk
+          generate_release_notes: true
