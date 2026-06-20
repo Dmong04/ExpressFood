@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.project.expressfood.ui.auth.LoginFragment"
+        android:label="Login" />
+
+    <fragment
+        android:id="@+id/clientHomeFragment"
+        android:name="com.project.expressfood.ui.client.home.ClientHomeFragment"
+        android:label="Menú">
+
+        <action
+            android:id="@+id/action_clientHomeFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+
+        <action
+            android:id="@+id/action_clientHomeFragment_to_ordersFragment"
+            app:destination="@id/ordersFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.project.expressfood.ui.client.cart.CartFragment"
+        android:label="Mi Carrito">
+
+        <action
+            android:id="@+id/action_cartFragment_to_clientHome"
+            app:destination="@id/clientHomeFragment"
+            app:popUpTo="@id/clientHomeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.project.expressfood.ui.client.orders.OrdersFragment"
+        android:label="Mis Órdenes">
+
+        <action
+            android:id="@+id/action_ordersFragment_to_clientHome"
+            app:destination="@id/clientHomeFragment"
+            app:popUpTo="@id/clientHomeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_clientHomeFragment_to_reportFragment"
+        app:destination="@id/reportFragment" />
+
+    <fragment
+        android:id="@+id/reportFragment"
+        android:name="com.project.expressfood.ui.client.report.ReportFragment"
+        android:label="Mis Reportes" />
+
+    <fragment
+        android:id="@+id/adminOrdersFragment"
+        android:name="com.project.expressfood.ui.admin.AdminOrdersFragment"
+        android:label="Gestión de Pedidos" />
+
+<!--    <fragment-->
+<!--        android:id="@+id/adminPanelFragment"-->
+<!--        android:name="com.project.expressfood.ui.admin.AdminPanelFragment"-->
+<!--        android:label="Panel Admin" />-->
+
+<!--    <action-->
+<!--        android:id="@+id/action_login_to_client"-->
+<!--        app:destination="@id/clientHomeFragment"-->
+<!--        app:popUpTo="@id/loginFragment"-->
+<!--        app:popUpToInclusive="true" />-->
+
+<!--    <action-->
+<!--        android:id="@+id/action_login_to_admin"-->
+<!--        app:destination="@id/adminPanelFragment"-->
+<!--        app:popUpTo="@id/loginFragment"-->
+<!--        app:popUpToInclusive="true" />-->
+
+</navigation>

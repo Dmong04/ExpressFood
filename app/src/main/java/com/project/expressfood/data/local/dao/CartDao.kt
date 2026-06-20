@@ -18,4 +18,13 @@ interface CartDao {
 
     @Query("DELETE FROM cart_items WHERE clientId = :clientId")
     suspend fun clearByClient(clientId: String)
+
+    @Query("UPDATE cart_items SET quantity = quantity + 1 WHERE cartItemId = :cartItemId")
+    suspend fun incrementQuantity(cartItemId: String)
+
+    @Query("UPDATE cart_items SET quantity = quantity - 1 WHERE cartItemId = :cartItemId AND quantity > 0")
+    suspend fun decrementQuantity(cartItemId: String)
+
+    @Query("SELECT COUNT(*) FROM cart_items WHERE clientId = :clientId")
+    fun getCartItemCount(clientId: String): Flow<Int>
 }

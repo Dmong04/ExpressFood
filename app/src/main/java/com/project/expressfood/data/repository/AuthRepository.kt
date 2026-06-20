@@ -6,6 +6,7 @@ import com.project.expressfood.data.remote.firestore.UserFirestoreService
 import com.project.expressfood.domain.model.User
 import com.project.expressfood.domain.model.UserRole
 import kotlinx.coroutines.flow.Flow
+import android.content.Context
 
 class AuthRepository(
     private val authService: AuthService,
@@ -21,6 +22,8 @@ class AuthRepository(
                 val nameParts = firebaseUser.displayName.orEmpty().trim().split(" ", limit = 2)
                 User(
                     uid          = firebaseUser.uid,
+                    email        = firebaseUser.email ?: "",
+                    displayName  = firebaseUser.displayName ?: "",
                     firstName    = nameParts.getOrElse(0) { "" },
                     lastName     = nameParts.getOrElse(1) { "" },
                     phone        = firebaseUser.phoneNumber ?: "",
@@ -30,6 +33,11 @@ class AuthRepository(
                     createdAt    = System.currentTimeMillis(),
                 ).also { userFirestoreService.createUser(it) }
             }
+    }
+
+    suspend fun signInWithGoogle(context: Context): User {
+        val firebaseUser = authService.signInWithGoogle(context)
+        return getOrCreateUser(firebaseUser)
     }
 
     fun signOut() = authService.signOut()

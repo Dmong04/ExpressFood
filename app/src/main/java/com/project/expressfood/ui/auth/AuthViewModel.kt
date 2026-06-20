@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import android.content.Context
 
 class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
@@ -19,7 +20,6 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
         observeAuthState()
     }
 
-    /** Escucha cambios en Firebase Auth y actualiza el StateFlow. */
     private fun observeAuthState() {
         viewModelScope.launch {
             authRepository.authState.collect { firebaseUser ->
@@ -39,7 +39,29 @@ class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
     fun signOut() = authRepository.signOut()
 
-    /** Factory para inyección manual de dependencias (sin Hilt). */
+
+    private val _loginError = MutableStateFlow<String?>(null)
+    val loginError: StateFlow<String?> = _loginError.asStateFlow()
+
+    private val _isSigningIn = MutableStateFlow(false)
+    val isSigningIn: StateFlow<Boolean> = _isSigningIn.asStateFlow()
+
+    fun signInWithGoogle(context: Context) {
+        viewModelScope.launch {
+            _isSigningIn.value = true
+            _loginError.value  = null
+            try {
+                authRepository.signInWithGoogle(context)
+            } catch (e: Exception) {
+                _loginError.value = e.message ?: "Error al iniciar sesión"
+            } finally {
+                _isSigningIn.value = false
+            }
+        }
+    }
+
+    fun clearLoginError() { _loginError.value = null }
+
     class Factory(private val authRepository: AuthRepository) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T =

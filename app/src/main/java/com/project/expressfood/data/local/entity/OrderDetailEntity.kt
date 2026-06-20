@@ -5,7 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(
-    tableName = "order_detail",
+    tableName = "orderDetail",
     foreignKeys = [
         ForeignKey(
             entity = OrderEntity::class,
