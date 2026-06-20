@@ -193,12 +193,17 @@ ExpressFood/
 
 | Inicio de sesión | Menú principal | Búsqueda de platillos |
 | :---: | :---: | :---: |
-| <img src="screenshots/login.jpg" width="220"/> | <img src="screenshots/menu.jpg" width="220"/> | <img src="screenshots/search.jpg" width="220"/> |
+| <img width="1080" height="2340" alt="login" src="https://github.com/user-attachments/assets/29599d24-b3a6-4556-9a37-2801b660f46d" />
+| <img width="1080" height="2340" alt="menu" src="https://github.com/user-attachments/assets/bc119a58-34d5-4866-856f-8bcdd9deef24" />
+| <img width="1080" height="2340" alt="busqueda" src="https://github.com/user-attachments/assets/9cb5951a-7d82-41d8-85b6-c807faf441d2" />
+| |
 | Pantalla de bienvenida con inicio de sesión mediante Google. | Listado del menú con platillos, precios y calificaciones. | Búsqueda de platillos por nombre o ingrediente. |
 
 | Carrito de compras | Historial de pedidos | |
 | :---: | :---: | :---: |
-| <img src="screenshots/cart.jpg" width="220"/> | <img src="screenshots/orders-history.jpg" width="220"/> | |
+| <img width="1080" height="2340" alt="carrito" src="https://github.com/user-attachments/assets/a6a3d503-c33d-407a-9cc0-6327ce6b66a6" />
+| <img width="1080" height="2340" alt="historial" src="https://github.com/user-attachments/assets/ea94b59b-b9c8-48ff-8b24-e729272acfd7" />
+| |
 | Resumen de la orden con subtotal, impuestos (13% IVA) y total. | Historial de pedidos con fecha, estado y monto. | |
 
 ---
