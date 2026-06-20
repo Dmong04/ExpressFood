@@ -18,7 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:titleTextColor="@color/on_primary"
-            app:title="Gestión de Pedidos" />
+            app:title="Gestión de Pedidos"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:navigationIconTint="@color/on_primary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
