@@ -28,6 +28,43 @@ La aplicación sigue una filosofía **offline-first**: el usuario puede ver el m
 
 ---
 
+## 📱 Capturas de pantalla
+
+<table>
+  <tr>
+    <td align="center" width="33%">
+      <img src="https://github.com/user-attachments/assets/29599d24-b3a6-4556-9a37-2801b660f46d" width="220" alt="Login con Google"/><br/>
+      <b>Inicio de sesión</b><br/>
+      <sub>Pantalla de bienvenida con inicio de sesión mediante Google.</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="https://github.com/user-attachments/assets/bc119a58-34d5-4866-856f-8bcdd9deef24" width="220" alt="Menú principal"/><br/>
+      <b>Menú principal</b><br/>
+      <sub>Listado del menú con platillos, precios y calificaciones.</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="https://github.com/user-attachments/assets/9cb5951a-7d82-41d8-85b6-c807faf441d2" width="220" alt="Búsqueda de platillos"/><br/>
+      <b>Búsqueda</b><br/>
+      <sub>Búsqueda de platillos por nombre o ingrediente.</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="33%">
+      <img src="https://github.com/user-attachments/assets/a6a3d503-c33d-407a-9cc0-6327ce6b66a6" width="220" alt="Carrito de compras"/><br/>
+      <b>Carrito y checkout</b><br/>
+      <sub>Resumen de la orden con subtotal, impuestos (13% IVA) y total.</sub>
+    </td>
+    <td align="center" width="33%">
+      <img src="https://github.com/user-attachments/assets/ea94b59b-b9c8-48ff-8b24-e729272acfd7" width="220" alt="Historial de pedidos"/><br/>
+      <b>Historial de pedidos</b><br/>
+      <sub>Historial de pedidos con fecha, estado y monto.</sub>
+    </td>
+    <td width="33%"></td>
+  </tr>
+</table>
+
+---
+
 ## 🛠️ Stack tecnológico
 
 | Capa                       | Tecnologías                                                  |
@@ -61,20 +98,6 @@ ExpressFood distribuye sus datos entre tres proveedores:
 - **Room:** caché local para productos, pedidos y el carrito de compras activo.
 - **Firestore:** fuente de verdad principal para perfiles de usuario y estado de los pedidos.
 - **Supabase:** almacenamiento de imágenes de productos del menú, optimizado para alto rendimiento.
-
----
-
-## 📱 Capturas de pantalla
-
-| Login | Menú principal | Búsqueda |
-| :---: | :---: | :---: |
-| ![Login con Google](screenshots/login.jpg) | ![Menú de productos](screenshots/menu.jpg) | ![Búsqueda de platillos](screenshots/busqueda.jpg) |
-
-| Carrito y checkout | Historial de pedidos |
-| :---: | :---: |
-| ![Carrito y checkout](screenshots/carrito.jpg) | ![Historial de pedidos](screenshots/historial.jpg) |
-
-> Las imágenes se encuentran en la carpeta [`screenshots/`](screenshots/) del repositorio.
 
 ---
 
@@ -186,25 +209,6 @@ ExpressFood/
 ├── build.gradle.kts
 └── settings.gradle.kts
 ```
-
----
-
-## 📱 Capturas de pantalla
-
-| Inicio de sesión | Menú principal | Búsqueda de platillos |
-| :---: | :---: | :---: |
-| <img width="1080" height="2340" alt="login" src="https://github.com/user-attachments/assets/29599d24-b3a6-4556-9a37-2801b660f46d" />
-| <img width="1080" height="2340" alt="menu" src="https://github.com/user-attachments/assets/bc119a58-34d5-4866-856f-8bcdd9deef24" />
-| <img width="1080" height="2340" alt="busqueda" src="https://github.com/user-attachments/assets/9cb5951a-7d82-41d8-85b6-c807faf441d2" />
-| |
-| Pantalla de bienvenida con inicio de sesión mediante Google. | Listado del menú con platillos, precios y calificaciones. | Búsqueda de platillos por nombre o ingrediente. |
-
-| Carrito de compras | Historial de pedidos | |
-| :---: | :---: | :---: |
-| <img width="1080" height="2340" alt="carrito" src="https://github.com/user-attachments/assets/a6a3d503-c33d-407a-9cc0-6327ce6b66a6" />
-| <img width="1080" height="2340" alt="historial" src="https://github.com/user-attachments/assets/ea94b59b-b9c8-48ff-8b24-e729272acfd7" />
-| |
-| Resumen de la orden con subtotal, impuestos (13% IVA) y total. | Historial de pedidos con fecha, estado y monto. | |
 
 ---
 
