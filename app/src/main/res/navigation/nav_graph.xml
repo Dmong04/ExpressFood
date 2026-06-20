@@ -57,6 +57,19 @@
         android:label="Mis Reportes" />
 
     <fragment
+        android:id="@+id/adminDashboardFragment"
+        android:name="com.project.expressfood.ui.admin.AdminDashboardFragment"
+        android:label="Dashboard">
+
+        <action
+            android:id="@+id/action_dashboard_to_adminOrders"
+            app:destination="@id/adminOrdersFragment"
+            app:popUpTo="@id/adminDashboardFragment"
+            app:popUpToInclusive="false" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/adminOrdersFragment"
         android:name="com.project.expressfood.ui.admin.AdminOrdersFragment"
         android:label="Gestión de Pedidos" />

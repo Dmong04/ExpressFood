@@ -1,8 +1,7 @@
 // MainActivity.kt
 package com.project.expressfood
-
-import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
