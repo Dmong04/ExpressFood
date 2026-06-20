@@ -95,7 +95,7 @@ class LoginFragment : Fragment() {
 
     private fun navigateToHome(role: UserRole) {
         val destination = if (role == UserRole.ADMIN) {
-            R.id.adminOrdersFragment
+            R.id.adminDashboardFragment
         } else {
             R.id.clientHomeFragment
         }

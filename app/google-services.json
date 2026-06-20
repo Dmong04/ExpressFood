@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "37782324999-78ol5eb4l88egh9atertoku2lm6b469k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.expressfood",
+            "certificate_hash": "74328bd8ba70db4d224550c8413c33108b2d9230"
+          }
+        },
+        {
+          "client_id": "37782324999-91f814kj2bdb3qa0klgivfgaehvqhkv6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.expressfood",
+            "certificate_hash": "379dd0ac7e932b3b7b8b938ae58a79cc55d0e7a1"
+          }
+        },
+        {
           "client_id": "37782324999-febbefjd5nduu7t36iimctjiu5h5fkf6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -22,7 +38,15 @@
           }
         },
         {
-          "client_id": "37782324999-j8rc6r8fg4b61lpiijnbl3ko5sk3fuhd.apps.googleusercontent.com",
+          "client_id": "37782324999-o52njsf1dnaqntj69ehjrei3bk1iu7vd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.project.expressfood",
+            "certificate_hash": "6b49a894d2e82423b7b2094f68fbeeeae10b58f8"
+          }
+        },
+        {
+          "client_id": "37782324999-j5cmcvg0ba7c7j8akvk5vt6e3cvvbgrd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +59,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "37782324999-j8rc6r8fg4b61lpiijnbl3ko5sk3fuhd.apps.googleusercontent.com",
+              "client_id": "37782324999-j5cmcvg0ba7c7j8akvk5vt6e3cvvbgrd.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
