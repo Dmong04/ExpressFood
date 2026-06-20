@@ -22,15 +22,29 @@ android {
 
         // Usamos gradleLocalProperties que es más amigable con Gradle Kotlin DSL
         val localProps = gradleLocalProperties(rootDir, providers)
-        
+
         buildConfigField("String", "WEB_CLIENT_ID", "\"${localProps["WEB_CLIENT_ID"] ?: ""}\"")
         buildConfigField("String", "SUPABASE_URL", "\"${localProps["SUPABASE_URL"] ?: ""}\"")
         buildConfigField("String", "SUPABASE_SERVICE_KEY", "\"${localProps["SUPABASE_SERVICE_KEY"] ?: ""}\"")
     }
 
+    // ---- NUEVO: bloque de firma ----
+    signingConfigs {
+        create("release") {
+            val keystorePath = System.getenv("KEYSTORE_PATH")
+            if (keystorePath != null) {
+                storeFile = file(keystorePath)
+                storePassword = System.getenv("KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release") // <-- NUEVO: conecta la firma
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
