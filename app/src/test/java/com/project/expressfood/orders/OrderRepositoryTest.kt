@@ -29,10 +29,10 @@ class OrderRepositoryTest {
 
     private val fakeOrderEntity = OrderEntity(
         orderId    = "order_001",
-        clientId   = "client_001",
+        clientId   = "client_0002",
         date       = 1000L,
         time       = "12:30",
-        status     = "PENDING",
+        status     = "DELIVERED",
         totalPrice = 9000.0,
         synced     = false,
     )
